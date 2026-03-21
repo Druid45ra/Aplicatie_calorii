@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/utils/date_utils.dart';
+import '../../../dashboard/presentation/widgets/navigation_shell.dart';
 import '../controllers/weight_controller.dart';
 
 class WeightPage extends ConsumerWidget {
@@ -11,60 +12,55 @@ class WeightPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final entriesAsync = ref.watch(weightControllerProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Weight history'),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _showAddDialog(context, ref),
-        icon: const Icon(Icons.add),
-        label: const Text('Entry'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: entriesAsync.when(
-          data: (entries) {
-            if (entries.isEmpty) {
-              return const Center(
-                child: Text('No weight entries yet.'),
+    return NavigationShell(
+      index: 2,
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Weight history')),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () => _showAddDialog(context, ref),
+          icon: const Icon(Icons.add),
+          label: const Text('Entry'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: entriesAsync.when(
+            data: (entries) {
+              if (entries.isEmpty) {
+                return const Center(child: Text('No weight entries yet.'));
+              }
+
+              return ListView.separated(
+                itemCount: entries.length,
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 12),
+                itemBuilder: (context, index) {
+                  final entry = entries[index];
+
+                  return Card(
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.all(16),
+                      leading: const CircleAvatar(
+                        child: Icon(Icons.monitor_weight),
+                      ),
+                      title: Text('${entry.weightKg.toStringAsFixed(1)} kg'),
+                      subtitle: Text(AppDateUtils.formatDate(entry.date)),
+                      trailing: IconButton(
+                        onPressed: () {
+                          ref
+                              .read(weightControllerProvider.notifier)
+                              .removeEntry(entry.id);
+                        },
+                        icon: const Icon(Icons.delete_outline),
+                      ),
+                    ),
+                  );
+                },
               );
-            }
-
-            return ListView.separated(
-              itemCount: entries.length,
-              separatorBuilder: (context, index) =>
-                  const SizedBox(height: 12),
-              itemBuilder: (context, index) {
-                final entry = entries[index];
-
-                return Card(
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.all(16),
-                    leading: const CircleAvatar(
-                      child: Icon(Icons.monitor_weight),
-                    ),
-                    title: Text('${entry.weightKg.toStringAsFixed(1)} kg'),
-                    subtitle: Text(AppDateUtils.formatDate(entry.date)),
-                    trailing: IconButton(
-                      onPressed: () {
-                        ref
-                            .read(weightControllerProvider.notifier)
-                            .removeEntry(entry.id);
-                      },
-                      icon: const Icon(Icons.delete_outline),
-                    ),
-                  ),
-                );
-              },
-            );
-          },
-          error: (error, stackTrace) {
-            return Center(
-              child: Text(error.toString()),
-            );
-          },
-          loading: () => const Center(
-            child: CircularProgressIndicator(),
+            },
+            error: (error, stackTrace) {
+              return Center(child: Text(error.toString()));
+            },
+            loading: () => const Center(child: CircularProgressIndicator()),
           ),
         ),
       ),
@@ -87,9 +83,7 @@ class WeightPage extends ConsumerWidget {
                 children: [
                   TextField(
                     controller: controller,
-                    decoration: const InputDecoration(
-                      labelText: 'Weight (kg)',
-                    ),
+                    decoration: const InputDecoration(labelText: 'Weight (kg)'),
                     keyboardType: const TextInputType.numberWithOptions(
                       decimal: true,
                     ),

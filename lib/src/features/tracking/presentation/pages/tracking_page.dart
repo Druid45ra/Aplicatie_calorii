@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/utils/date_utils.dart';
+import '../../../dashboard/presentation/widgets/navigation_shell.dart';
 import '../../domain/entities/meal_entry.dart';
 import '../controllers/meals_controller.dart';
 import '../widgets/meal_form_sheet.dart';
@@ -14,104 +15,111 @@ class TrackingPage extends ConsumerWidget {
     final mealsAsync = ref.watch(mealsControllerProvider);
     final selectedDate = ref.watch(selectedDateProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Meal Tracking')),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _showForm(context, ref),
-        icon: const Icon(Icons.add),
-        label: const Text('Meal'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    'Selected date: ${AppDateUtils.formatDate(selectedDate)}',
+    return NavigationShell(
+      index: 1,
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Meal Tracking')),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () => _showForm(context, ref),
+          icon: const Icon(Icons.add),
+          label: const Text('Meal'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Selected date: ${AppDateUtils.formatDate(selectedDate)}',
+                    ),
                   ),
-                ),
-                IconButton(
-                  onPressed: () async {
-                    final picked = await showDatePicker(
-                      context: context,
-                      initialDate: selectedDate,
-                      firstDate: DateTime(2020),
-                      lastDate: DateTime(2100),
-                    );
-
-                    if (picked != null) {
-                      ref.read(selectedDateProvider.notifier).state =
-                          AppDateUtils.normalizeDate(picked);
-                    }
-                  },
-                  icon: const Icon(Icons.calendar_today),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Expanded(
-              child: mealsAsync.when(
-                data: (meals) {
-                  final filtered = meals
-                      .where(
-                        (meal) =>
-                            AppDateUtils.isSameDay(meal.date, selectedDate),
-                      )
-                      .toList();
-
-                  if (filtered.isEmpty) {
-                    return const Center(
-                      child: Text('No meals for this day yet.'),
-                    );
-                  }
-
-                  return ListView.separated(
-                    itemCount: filtered.length,
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 12),
-                    itemBuilder: (context, index) {
-                      final meal = filtered[index];
-
-                      return Card(
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.all(16),
-                          title: Text(meal.name),
-                          subtitle: Text(
-                            '${meal.mealType} • ${meal.calories} kcal • '
-                            'P${meal.protein}/C${meal.carbs}/F${meal.fat}',
-                          ),
-                          trailing: PopupMenuButton<String>(
-                            onSelected: (value) {
-                              if (value == 'edit') {
-                                _showForm(context, ref, initial: meal);
-                              } else if (value == 'delete') {
-                                ref
-                                    .read(mealsControllerProvider.notifier)
-                                    .remove(meal.id);
-                              }
-                            },
-                            itemBuilder: (context) => const [
-                              PopupMenuItem(value: 'edit', child: Text('Edit')),
-                              PopupMenuItem(
-                                value: 'delete',
-                                child: Text('Delete'),
-                              ),
-                            ],
-                          ),
-                        ),
+                  IconButton(
+                    onPressed: () async {
+                      final picked = await showDatePicker(
+                        context: context,
+                        initialDate: selectedDate,
+                        firstDate: DateTime(2020),
+                        lastDate: DateTime(2100),
                       );
+
+                      if (picked != null) {
+                        ref.read(selectedDateProvider.notifier).state =
+                            AppDateUtils.normalizeDate(picked);
+                      }
                     },
-                  );
-                },
-                error: (error, stackTrace) {
-                  return Center(child: Text(error.toString()));
-                },
-                loading: () => const Center(child: CircularProgressIndicator()),
+                    icon: const Icon(Icons.calendar_today),
+                  ),
+                ],
               ),
-            ),
-          ],
+              const SizedBox(height: 12),
+              Expanded(
+                child: mealsAsync.when(
+                  data: (meals) {
+                    final filtered = meals
+                        .where(
+                          (meal) =>
+                              AppDateUtils.isSameDay(meal.date, selectedDate),
+                        )
+                        .toList();
+
+                    if (filtered.isEmpty) {
+                      return const Center(
+                        child: Text('No meals for this day yet.'),
+                      );
+                    }
+
+                    return ListView.separated(
+                      itemCount: filtered.length,
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 12),
+                      itemBuilder: (context, index) {
+                        final meal = filtered[index];
+
+                        return Card(
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.all(16),
+                            title: Text(meal.name),
+                            subtitle: Text(
+                              '${meal.mealType} • ${meal.calories} kcal • '
+                              'P${meal.protein}/C${meal.carbs}/F${meal.fat}',
+                            ),
+                            trailing: PopupMenuButton<String>(
+                              onSelected: (value) {
+                                if (value == 'edit') {
+                                  _showForm(context, ref, initial: meal);
+                                } else if (value == 'delete') {
+                                  ref
+                                      .read(mealsControllerProvider.notifier)
+                                      .remove(meal.id);
+                                }
+                              },
+                              itemBuilder: (context) => const [
+                                PopupMenuItem(
+                                  value: 'edit',
+                                  child: Text('Edit'),
+                                ),
+                                PopupMenuItem(
+                                  value: 'delete',
+                                  child: Text('Delete'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  error: (error, stackTrace) {
+                    return Center(child: Text(error.toString()));
+                  },
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
