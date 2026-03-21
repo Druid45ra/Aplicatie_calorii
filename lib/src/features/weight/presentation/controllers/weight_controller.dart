@@ -25,9 +25,10 @@ class WeightController extends AsyncNotifier<List<WeightEntry>> {
   }
 
   Future<void> addEntry(double weight, DateTime date) async {
-    final current = [...state.valueOrNull ?? await _getEntries()]
-      ..add(WeightEntry(id: _uuid.v4(), weightKg: weight, date: date))
-      ..sort((a, b) => a.date.compareTo(b.date));
+final current = [
+      ...state.valueOrNull ?? await _getEntries(),
+      WeightEntry(id: _uuid.v4(), weightKg: weight, date: date),
+    ]..sort((a, b) => a.date.compareTo(b.date));
 
     await _persist(current);
   }
