@@ -1,13 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AnalyticsPage extends StatelessWidget {
+import '../../../../core/widgets/metric_card.dart';
+import '../controllers/analytics_controller.dart';
+
+class AnalyticsPage extends ConsumerWidget {
   const AnalyticsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final snapshot = ref.watch(analyticsControllerProvider);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Analytics')),
-      body: const Center(child: Text('Analytics page')),
+      appBar: AppBar(
+        title: const Text('Analytics'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: snapshot.when(
+          data: (data) {
+            return GridView.count(
+              crossAxisCount: 2,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              children: [
+                MetricCard(
+                  label: 'Avg calories',
+                  value: data.averageCalories.toStringAsFixed(0),
+                  icon: Icons.local_fire_department,
+                ),
+                MetricCard(
+                  label: 'Avg weight',
+                  value: '${data.averageWeight.toStringAsFixed(1)} kg',
+                  icon: Icons.monitor_weight,
+                ),
+                MetricCard(
+                  label: 'Weight change',
+                  value: '${data.weightChange.toStringAsFixed(1)} kg',
+                  icon: Icons.show_chart,
+                ),
+                MetricCard(
+                  label: 'Adherence',
+                  value: '${(data.adherenceRate * 100).toStringAsFixed(0)}%',
+                  icon: Icons.verified,
+                ),
+              ],
+            );
+          },
+          error: (error, stackTrace) {
+            return Center(
+              child: Text(error.toString()),
+            );
+          },
+          loading: () => const Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
+      ),
     );
   }
 }
