@@ -6,7 +6,6 @@ class LocalMealDataSource {
   LocalMealDataSource(this.box);
 
   final Box<dynamic> box;
-
   static const _key = 'meal_entries';
 
   Future<List<MealEntryModel>> getMeals() async {
@@ -21,5 +20,9 @@ class LocalMealDataSource {
 
   Future<void> saveMeals(List<MealEntryModel> meals) async {
     await box.put(_key, meals.map((meal) => meal.toMap()).toList());
+  }
+
+  Future<void> clearMeals() async {
+    await box.delete(_key);
   }
 }

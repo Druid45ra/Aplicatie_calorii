@@ -6,7 +6,6 @@ class LocalWeightDataSource {
   LocalWeightDataSource(this.box);
 
   final Box<dynamic> box;
-
   static const _key = 'weight_entries';
 
   Future<List<WeightEntryModel>> getEntries() async {
@@ -21,5 +20,9 @@ class LocalWeightDataSource {
 
   Future<void> saveEntries(List<WeightEntryModel> entries) async {
     await box.put(_key, entries.map((entry) => entry.toMap()).toList());
+  }
+
+  Future<void> clearEntries() async {
+    await box.delete(_key);
   }
 }

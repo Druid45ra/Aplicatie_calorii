@@ -19,4 +19,9 @@ class WeightRepositoryImpl implements WeightRepository {
       entries.map(WeightEntryModel.fromEntity).toList(),
     );
   }
+
+  @override
+  Future<void> clearEntries() {
+    return localDataSource.clearEntries();
+  }
 }

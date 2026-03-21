@@ -17,4 +17,9 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<void> saveProfile(UserProfile profile) {
     return localDataSource.saveProfile(UserProfileModel.fromEntity(profile));
   }
+
+  @override
+  Future<void> clearProfile() {
+    return localDataSource.clearProfile();
+  }
 }

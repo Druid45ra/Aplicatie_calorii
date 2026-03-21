@@ -19,4 +19,9 @@ class MealRepositoryImpl implements MealRepository {
       meals.map(MealEntryModel.fromEntity).toList(),
     );
   }
+
+  @override
+  Future<void> clearMeals() {
+    return localDataSource.clearMeals();
+  }
 }

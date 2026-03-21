@@ -6,7 +6,6 @@ class LocalProfileDataSource {
   LocalProfileDataSource(this.box);
 
   final Box<dynamic> box;
-
   static const _profileKey = 'user_profile';
 
   Future<UserProfileModel?> getProfile() async {
@@ -21,5 +20,9 @@ class LocalProfileDataSource {
 
   Future<void> saveProfile(UserProfileModel profile) async {
     await box.put(_profileKey, profile.toMap());
+  }
+
+  Future<void> clearProfile() async {
+    await box.delete(_profileKey);
   }
 }

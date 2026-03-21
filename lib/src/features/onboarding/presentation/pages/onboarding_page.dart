@@ -23,6 +23,8 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
   ActivityLevel _activity = ActivityLevel.moderate;
   GoalType _goal = GoalType.maintain;
 
+  bool _didPrefill = false;
+
   @override
   void dispose() {
     _ageController.dispose();
@@ -34,6 +36,27 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     final profileState = ref.watch(profileControllerProvider);
+
+    profileState.whenData((profile) {
+      if (profile != null && !_didPrefill) {
+        _didPrefill = true;
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (!mounted) {
+            return;
+          }
+
+          setState(() {
+            _sex = profile.sex;
+            _activity = profile.activityLevel;
+            _goal = profile.goal;
+            _ageController.text = profile.age.toString();
+            _heightController.text = profile.heightCm.toString();
+            _weightController.text = profile.weightKg.toString();
+          });
+        });
+      }
+    });
 
     return Scaffold(
       appBar: AppBar(title: const Text('Onboarding')),

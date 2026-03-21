@@ -4,6 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../../dashboard/presentation/widgets/navigation_shell.dart';
 import '../../../profile/presentation/controllers/profile_controller.dart';
+import '../../../tracking/presentation/controllers/meals_controller.dart';
+import '../../../weight/presentation/controllers/weight_controller.dart';
+import '../controllers/settings_controller.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
@@ -37,20 +40,35 @@ class SettingsPage extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  const Card(
+                  Card(
                     child: ListTile(
-                      title: Text('Storage mode'),
-                      subtitle: Text(
-                        'Offline-first local persistence using Hive',
+                      title: const Text('Edit profile'),
+                      subtitle: const Text(
+                        'Reopen onboarding with existing values',
                       ),
+                      trailing: const Icon(Icons.edit_outlined),
+                      onTap: () {
+                        context.go('/onboarding');
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Card(
+                    child: ListTile(
+                      title: const Text('Reset all local data'),
+                      subtitle: const Text(
+                        'Delete profile, meals and weight history',
+                      ),
+                      trailing: const Icon(Icons.delete_forever_outlined),
+                      onTap: () => _confirmReset(context, ref),
                     ),
                   ),
                   const SizedBox(height: 12),
                   const Card(
                     child: ListTile(
-                      title: Text('Architecture'),
+                      title: Text('Storage mode'),
                       subtitle: Text(
-                        'Clean Architecture + Riverpod + get_it + Hive',
+                        'Offline-first local persistence using Hive',
                       ),
                     ),
                   ),
@@ -65,5 +83,45 @@ class SettingsPage extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _confirmReset(BuildContext context, WidgetRef ref) async {
+    final confirmed =
+        await showDialog<bool>(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Reset all data'),
+              content: const Text(
+                'This will remove your profile, meals and weight history from local storage.',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: const Text('Cancel'),
+                ),
+                FilledButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: const Text('Reset'),
+                ),
+              ],
+            );
+          },
+        ) ??
+        false;
+
+    if (!confirmed) {
+      return;
+    }
+
+    await ref.read(settingsControllerProvider).resetAll();
+
+    ref.invalidate(profileControllerProvider);
+    ref.invalidate(mealsControllerProvider);
+    ref.invalidate(weightControllerProvider);
+
+    if (context.mounted) {
+      context.go('/onboarding');
+    }
   }
 }
