@@ -14,6 +14,8 @@ import '../../features/tracking/domain/repositories/meal_repository.dart';
 import '../../features/weight/data/datasources/local_weight_datasource.dart';
 import '../../features/weight/data/repositories/weight_repository_impl.dart';
 import '../../features/weight/domain/repositories/weight_repository.dart';
+import '../../features/settings/data/repositories/backup_repository_impl.dart';
+import '../../features/settings/domain/repositories/backup_repository.dart';
 import '../constants/app_boxes.dart';
 
 final sl = GetIt.instance;
@@ -39,5 +41,8 @@ Future<void> setupDependencies() async {
     )
     ..registerLazySingleton<AnalyticsRepository>(
       () => AnalyticsRepositoryImpl(sl(), sl()),
-    );
+    )
+    ..registerLazySingleton<BackupRepository>(
+  () => BackupRepositoryImpl(sl(), sl(), sl()),
+);
 }

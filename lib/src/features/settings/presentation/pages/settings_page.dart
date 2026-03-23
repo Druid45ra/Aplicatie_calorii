@@ -7,6 +7,9 @@ import '../../../profile/presentation/controllers/profile_controller.dart';
 import '../../../tracking/presentation/controllers/meals_controller.dart';
 import '../../../weight/presentation/controllers/weight_controller.dart';
 import '../controllers/settings_controller.dart';
+import '../../../analytics/presentation/controllers/analytics_controller.dart';
+import '../../../dashboard/presentation/controllers/dashboard_controller.dart';
+import '../controllers/backup_controller.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
@@ -25,6 +28,41 @@ class SettingsPage extends ConsumerWidget {
             data: (data) {
               return ListView(
                 children: [
+                  Card(
+                    child: ListTile(
+                      title: const Text('Export local data'),
+                      subtitle: const Text(
+                        'Create a JSON backup of profile, meals and weights',
+                      ),
+                      trailing: const Icon(Icons.upload_file_outlined),
+                      onTap: () async {
+                        await ref.read(backupControllerProvider).exportData();
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Card(
+                    child: ListTile(
+                      title: const Text('Import local data'),
+                      subtitle: const Text(
+                        'Restore profile, meals and weights from JSON',
+                      ),
+                      trailing: const Icon(Icons.download_outlined),
+                      onTap: () async {
+                        await ref.read(backupControllerProvider).importData();
+
+                        ref.invalidate(profileControllerProvider);
+                        ref.invalidate(mealsControllerProvider);
+                        ref.invalidate(weightControllerProvider);
+                        ref.invalidate(analyticsControllerProvider);
+                        ref.invalidate(dashboardControllerProvider);
+
+                        if (context.mounted) {
+                          context.go('/dashboard');
+                        }
+                      },
+                    ),
+                  ),
                   Card(
                     child: ListTile(
                       title: const Text('Profile'),
