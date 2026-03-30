@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:cross_file/cross_file.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -42,18 +41,15 @@ class BackupRepositoryImpl implements BackupRepository {
           .toList(),
     );
 
-    final jsonString = const JsonEncoder.withIndent('  ').convert(
-      backup.toMap(),
-    );
+    final jsonString = const JsonEncoder.withIndent(
+      '  ',
+    ).convert(backup.toMap());
 
     await SharePlus.instance.share(
       ShareParams(
         text: 'Calorie Compass backup export',
         files: [
-          XFile.fromData(
-            utf8.encode(jsonString),
-            mimeType: 'application/json',
-          ),
+          XFile.fromData(utf8.encode(jsonString), mimeType: 'application/json'),
         ],
         fileNameOverrides: const ['calorie_compass_backup.json'],
       ),
