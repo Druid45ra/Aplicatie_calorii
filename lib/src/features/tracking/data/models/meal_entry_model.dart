@@ -14,6 +14,7 @@ class MealEntryModel extends MealEntry {
   });
 
 <<<<<<< ours
+<<<<<<< ours
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -56,6 +57,8 @@ class MealEntryModel extends MealEntry {
     );
   }
 =======
+=======
+>>>>>>> theirs
   Map<String, dynamic> toMap() => {
         'id': id,
         'name': name,
@@ -91,5 +94,8 @@ class MealEntryModel extends MealEntry {
         mealType: entity.mealType,
         notes: entity.notes,
       );
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 }

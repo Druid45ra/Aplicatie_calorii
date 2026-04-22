@@ -1,4 +1,5 @@
 <<<<<<< ours
+<<<<<<< ours
 # This file configures the analyzer, which statically analyzes Dart code to
 # check for errors, warnings, and lints.
 #
@@ -28,6 +29,8 @@ linter:
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
 =======
+=======
+>>>>>>> theirs
 include: package:flutter_lints/flutter.yaml
 
 linter:
@@ -35,4 +38,7 @@ linter:
     prefer_single_quotes: true
     always_use_package_imports: true
     avoid_print: true
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs

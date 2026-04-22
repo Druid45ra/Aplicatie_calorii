@@ -2,16 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 <<<<<<< ours
+<<<<<<< ours
 import '../../../../core/widgets/metric_card.dart';
 import '../../../dashboard/presentation/widgets/navigation_shell.dart';
 import '../../../tracking/presentation/controllers/meals_controller.dart';
 import '../controllers/analytics_controller.dart';
 import '../widgets/calorie_bar_chart.dart';
 =======
+=======
+>>>>>>> theirs
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../../core/widgets/metric_card.dart';
 import '../../../dashboard/presentation/widgets/navigation_shell.dart';
 import '../controllers/analytics_controller.dart';
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 
 class AnalyticsPage extends ConsumerWidget {
@@ -20,6 +26,7 @@ class AnalyticsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(analyticsControllerProvider);
+<<<<<<< ours
 <<<<<<< ours
     final mealsAsync = ref.watch(mealsControllerProvider);
 
@@ -90,6 +97,8 @@ class AnalyticsPage extends ConsumerWidget {
             loading: () => const Center(child: CircularProgressIndicator()),
           ),
 =======
+=======
+>>>>>>> theirs
     return NavigationShell(
       index: 3,
       child: AppScaffold(
@@ -108,6 +117,9 @@ class AnalyticsPage extends ConsumerWidget {
           ),
           error: (error, stackTrace) => Center(child: Text(error.toString())),
           loading: () => const Center(child: CircularProgressIndicator()),
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
         ),
       ),

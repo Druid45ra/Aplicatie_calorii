@@ -3,6 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 <<<<<<< ours
+<<<<<<< ours
+=======
+import '../../../../core/widgets/app_scaffold.dart';
+>>>>>>> theirs
 =======
 import '../../../../core/widgets/app_scaffold.dart';
 >>>>>>> theirs
@@ -19,6 +23,7 @@ class OnboardingPage extends ConsumerStatefulWidget {
 class _OnboardingPageState extends ConsumerState<OnboardingPage> {
   final _formKey = GlobalKey<FormState>();
 <<<<<<< ours
+<<<<<<< ours
 
   final _ageController = TextEditingController();
   final _heightController = TextEditingController();
@@ -29,13 +34,21 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
   final _heightController = TextEditingController();
   final _weightController = TextEditingController();
 >>>>>>> theirs
+=======
+  final _ageController = TextEditingController();
+  final _heightController = TextEditingController();
+  final _weightController = TextEditingController();
+>>>>>>> theirs
   BiologicalSex _sex = BiologicalSex.other;
   ActivityLevel _activity = ActivityLevel.moderate;
   GoalType _goal = GoalType.maintain;
 
 <<<<<<< ours
+<<<<<<< ours
   bool _didPrefill = false;
 
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
   @override
@@ -48,6 +61,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< ours
 <<<<<<< ours
     final profileState = ref.watch(profileControllerProvider);
 
@@ -162,6 +176,8 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
             ],
           ),
 =======
+=======
+>>>>>>> theirs
     return AppScaffold(
       title: 'Welcome',
       body: Form(
@@ -208,12 +224,16 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
               child: const Text('Save and continue'),
             ),
           ],
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
         ),
       ),
     );
   }
 
+<<<<<<< ours
 <<<<<<< ours
   Widget _numberField({
     required TextEditingController controller,
@@ -223,10 +243,14 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
 =======
   Widget _numberField(TextEditingController controller, String label) {
 >>>>>>> theirs
+=======
+  Widget _numberField(TextEditingController controller, String label) {
+>>>>>>> theirs
     return TextFormField(
       controller: controller,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       decoration: InputDecoration(labelText: label),
+<<<<<<< ours
 <<<<<<< ours
       validator: (value) {
         final text = value?.trim() ?? '';
@@ -252,6 +276,9 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
 =======
       validator: (value) => (value == null || value.isEmpty) ? 'Required' : null,
 >>>>>>> theirs
+=======
+      validator: (value) => (value == null || value.isEmpty) ? 'Required' : null,
+>>>>>>> theirs
     );
   }
 
@@ -259,6 +286,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
     if (!_formKey.currentState!.validate()) {
       return;
     }
+<<<<<<< ours
 <<<<<<< ours
 
     final age = int.tryParse(_ageController.text.trim());
@@ -270,10 +298,15 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
     }
 
 =======
+=======
+>>>>>>> theirs
     final age = int.parse(_ageController.text);
     final height = double.parse(_heightController.text);
     final weight = double.parse(_weightController.text);
     final calories = _estimateCalories(age: age, heightCm: height, weightKg: weight);
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
     final profile = UserProfile(
       sex: _sex,
@@ -282,6 +315,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
       weightKg: weight,
       goal: _goal,
       activityLevel: _activity,
+<<<<<<< ours
 <<<<<<< ours
       dailyCalorieTarget: _estimateCalories(
         age: age,
@@ -297,11 +331,17 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
     );
     await ref.read(profileControllerProvider.notifier).save(profile);
 >>>>>>> theirs
+=======
+      dailyCalorieTarget: calories,
+    );
+    await ref.read(profileControllerProvider.notifier).save(profile);
+>>>>>>> theirs
     if (mounted) {
       context.go('/dashboard');
     }
   }
 
+<<<<<<< ours
 <<<<<<< ours
   int _estimateCalories({
     required int age,
@@ -311,13 +351,19 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
 =======
   int _estimateCalories({required int age, required double heightCm, required double weightKg}) {
 >>>>>>> theirs
+=======
+  int _estimateCalories({required int age, required double heightCm, required double weightKg}) {
+>>>>>>> theirs
     final base = switch (_sex) {
       BiologicalSex.male => 10 * weightKg + 6.25 * heightCm - 5 * age + 5,
       BiologicalSex.female => 10 * weightKg + 6.25 * heightCm - 5 * age - 161,
       BiologicalSex.other => 10 * weightKg + 6.25 * heightCm - 5 * age - 78,
     };
 <<<<<<< ours
+<<<<<<< ours
 
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
     final factor = switch (_activity) {
@@ -328,7 +374,10 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
       ActivityLevel.athlete => 1.9,
     };
 <<<<<<< ours
+<<<<<<< ours
 
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
     final adjusted = switch (_goal) {
@@ -337,7 +386,10 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
       GoalType.gainWeight => base * factor + 250,
     };
 <<<<<<< ours
+<<<<<<< ours
 
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
     return adjusted.round();

@@ -7,6 +7,7 @@ import '../../domain/usecases/get_weight_entries.dart';
 import '../../domain/usecases/save_weight_entries.dart';
 
 <<<<<<< ours
+<<<<<<< ours
 final weightControllerProvider =
     AsyncNotifierProvider<WeightController, List<WeightEntry>>(
       WeightController.new,
@@ -14,10 +15,14 @@ final weightControllerProvider =
 =======
 final weightControllerProvider = AsyncNotifierProvider<WeightController, List<WeightEntry>>(WeightController.new);
 >>>>>>> theirs
+=======
+final weightControllerProvider = AsyncNotifierProvider<WeightController, List<WeightEntry>>(WeightController.new);
+>>>>>>> theirs
 
 class WeightController extends AsyncNotifier<List<WeightEntry>> {
   late final GetWeightEntries _getEntries = GetWeightEntries(sl());
   late final SaveWeightEntries _saveEntries = SaveWeightEntries(sl());
+<<<<<<< ours
 <<<<<<< ours
 
   final _uuid = const Uuid();
@@ -36,6 +41,8 @@ final current = [
     ]..sort((a, b) => a.date.compareTo(b.date));
 
 =======
+=======
+>>>>>>> theirs
   final _uuid = const Uuid();
 
   @override
@@ -45,15 +52,22 @@ final current = [
     final current = [...state.valueOrNull ?? await _getEntries()]
       ..add(WeightEntry(id: _uuid.v4(), weightKg: weight, date: date))
       ..sort((a, b) => a.date.compareTo(b.date));
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
     await _persist(current);
   }
 
   Future<void> removeEntry(String id) async {
 <<<<<<< ours
+<<<<<<< ours
     final current = [...state.valueOrNull ?? await _getEntries()]
       ..removeWhere((entry) => entry.id == id);
 
+=======
+    final current = [...state.valueOrNull ?? await _getEntries()]..removeWhere((entry) => entry.id == id);
+>>>>>>> theirs
 =======
     final current = [...state.valueOrNull ?? await _getEntries()]..removeWhere((entry) => entry.id == id);
 >>>>>>> theirs
@@ -63,12 +77,18 @@ final current = [
   Future<void> _persist(List<WeightEntry> entries) async {
     state = const AsyncLoading();
 <<<<<<< ours
+<<<<<<< ours
 
     state = await AsyncValue.guard(() async {
       await _saveEntries(entries);
       final reloaded = await _getEntries();
       reloaded.sort((a, b) => a.date.compareTo(b.date));
       return reloaded;
+=======
+    state = await AsyncValue.guard(() async {
+      await _saveEntries(entries);
+      return _getEntries();
+>>>>>>> theirs
 =======
     state = await AsyncValue.guard(() async {
       await _saveEntries(entries);

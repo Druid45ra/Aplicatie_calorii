@@ -15,7 +15,10 @@ class MealFormSheet extends StatefulWidget {
 class _MealFormSheetState extends State<MealFormSheet> {
   final _formKey = GlobalKey<FormState>();
 <<<<<<< ours
+<<<<<<< ours
 
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
   late final TextEditingController _nameController;
@@ -25,7 +28,10 @@ class _MealFormSheetState extends State<MealFormSheet> {
   late final TextEditingController _fatController;
   late final TextEditingController _notesController;
 <<<<<<< ours
+<<<<<<< ours
 
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
   String _mealType = 'Breakfast';
@@ -33,6 +39,7 @@ class _MealFormSheetState extends State<MealFormSheet> {
   @override
   void initState() {
     super.initState();
+<<<<<<< ours
 <<<<<<< ours
 
     final initial = widget.initial;
@@ -48,11 +55,16 @@ class _MealFormSheetState extends State<MealFormSheet> {
       text: initial?.carbs.toString() ?? '',
     );
 =======
+=======
+>>>>>>> theirs
     final initial = widget.initial;
     _nameController = TextEditingController(text: initial?.name ?? '');
     _caloriesController = TextEditingController(text: initial?.calories.toString() ?? '');
     _proteinController = TextEditingController(text: initial?.protein.toString() ?? '');
     _carbsController = TextEditingController(text: initial?.carbs.toString() ?? '');
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
     _fatController = TextEditingController(text: initial?.fat.toString() ?? '');
     _notesController = TextEditingController(text: initial?.notes ?? '');
@@ -86,6 +98,7 @@ class _MealFormSheetState extends State<MealFormSheet> {
             mainAxisSize: MainAxisSize.min,
             children: [
 <<<<<<< ours
+<<<<<<< ours
               Text(
                 widget.initial == null ? 'Add meal' : 'Edit meal',
                 style: Theme.of(context).textTheme.headlineSmall,
@@ -93,10 +106,14 @@ class _MealFormSheetState extends State<MealFormSheet> {
 =======
               Text(widget.initial == null ? 'Add meal' : 'Edit meal', style: Theme.of(context).textTheme.headlineSmall),
 >>>>>>> theirs
+=======
+              Text(widget.initial == null ? 'Add meal' : 'Edit meal', style: Theme.of(context).textTheme.headlineSmall),
+>>>>>>> theirs
               const SizedBox(height: 16),
               _field(_nameController, 'Meal name'),
               const SizedBox(height: 12),
               DropdownButtonFormField<String>(
+<<<<<<< ours
 <<<<<<< ours
                 initialValue: _mealType,
                 decoration: const InputDecoration(labelText: 'Meal type'),
@@ -160,6 +177,8 @@ class _MealFormSheetState extends State<MealFormSheet> {
                 requiredField: false,
               ),
 =======
+=======
+>>>>>>> theirs
                 value: _mealType,
                 decoration: const InputDecoration(labelText: 'Meal type'),
                 items: const ['Breakfast', 'Lunch', 'Dinner', 'Snack']
@@ -179,6 +198,9 @@ class _MealFormSheetState extends State<MealFormSheet> {
               ]),
               const SizedBox(height: 12),
               _field(_notesController, 'Notes', maxLines: 3, requiredField: false),
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
               const SizedBox(height: 16),
               FilledButton(onPressed: _save, child: const Text('Save meal')),
@@ -189,6 +211,7 @@ class _MealFormSheetState extends State<MealFormSheet> {
     );
   }
 
+<<<<<<< ours
 <<<<<<< ours
   Widget _field(
     TextEditingController controller,
@@ -203,17 +226,23 @@ class _MealFormSheetState extends State<MealFormSheet> {
       maxLines: maxLines,
       decoration: InputDecoration(labelText: label),
 =======
+=======
+>>>>>>> theirs
   Widget _field(TextEditingController controller, String label, {TextInputType? keyboardType, int maxLines = 1, bool requiredField = true}) {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(labelText: label),
       keyboardType: keyboardType,
       maxLines: maxLines,
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
       validator: (value) {
         if (!requiredField) {
           return null;
         }
+<<<<<<< ours
 <<<<<<< ours
 
         final text = value?.trim() ?? '';
@@ -225,6 +254,9 @@ class _MealFormSheetState extends State<MealFormSheet> {
 =======
         return (value == null || value.trim().isEmpty) ? 'Required' : null;
 >>>>>>> theirs
+=======
+        return (value == null || value.trim().isEmpty) ? 'Required' : null;
+>>>>>>> theirs
       },
     );
   }
@@ -233,6 +265,7 @@ class _MealFormSheetState extends State<MealFormSheet> {
     if (!_formKey.currentState!.validate()) {
       return;
     }
+<<<<<<< ours
 <<<<<<< ours
 
     final calories = int.tryParse(_caloriesController.text.trim());
@@ -246,20 +279,28 @@ class _MealFormSheetState extends State<MealFormSheet> {
 
 =======
 >>>>>>> theirs
+=======
+>>>>>>> theirs
     widget.onSave(
       MealEntry(
         id: widget.initial?.id ?? '',
         name: _nameController.text.trim(),
+<<<<<<< ours
 <<<<<<< ours
         calories: calories,
         protein: protein,
         carbs: carbs,
         fat: fat,
 =======
+=======
+>>>>>>> theirs
         calories: int.parse(_caloriesController.text),
         protein: double.parse(_proteinController.text),
         carbs: double.parse(_carbsController.text),
         fat: double.parse(_fatController.text),
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
         date: widget.initial?.date ?? DateTime.now(),
         mealType: _mealType,
@@ -267,7 +308,10 @@ class _MealFormSheetState extends State<MealFormSheet> {
       ),
     );
 <<<<<<< ours
+<<<<<<< ours
 
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
     Navigator.of(context).pop();

@@ -3,9 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/utils/date_utils.dart';
 <<<<<<< ours
+<<<<<<< ours
 import '../../../dashboard/presentation/widgets/navigation_shell.dart';
 import '../controllers/weight_controller.dart';
 import '../widgets/weight_line_chart.dart';
+=======
+import '../../../../core/widgets/app_scaffold.dart';
+import '../../../dashboard/presentation/widgets/navigation_shell.dart';
+import '../controllers/weight_controller.dart';
+>>>>>>> theirs
 =======
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../dashboard/presentation/widgets/navigation_shell.dart';
@@ -22,8 +28,13 @@ class WeightPage extends ConsumerWidget {
     return NavigationShell(
       index: 2,
 <<<<<<< ours
+<<<<<<< ours
       child: Scaffold(
         appBar: AppBar(title: const Text('Weight history')),
+=======
+      child: AppScaffold(
+        title: 'Weight evolution',
+>>>>>>> theirs
 =======
       child: AppScaffold(
         title: 'Weight evolution',
@@ -33,6 +44,7 @@ class WeightPage extends ConsumerWidget {
           icon: const Icon(Icons.add),
           label: const Text('Entry'),
         ),
+<<<<<<< ours
 <<<<<<< ours
         body: Padding(
           padding: const EdgeInsets.all(16),
@@ -80,6 +92,8 @@ class WeightPage extends ConsumerWidget {
             loading: () => const Center(child: CircularProgressIndicator()),
           ),
 =======
+=======
+>>>>>>> theirs
         body: entriesAsync.when(
           data: (entries) {
             if (entries.isEmpty) {
@@ -107,6 +121,9 @@ class WeightPage extends ConsumerWidget {
           },
           error: (error, stackTrace) => Center(child: Text(error.toString())),
           loading: () => const Center(child: CircularProgressIndicator()),
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
         ),
       ),
@@ -117,7 +134,10 @@ class WeightPage extends ConsumerWidget {
     final controller = TextEditingController();
     DateTime selected = DateTime.now();
 <<<<<<< ours
+<<<<<<< ours
 
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
     await showDialog<void>(
@@ -126,6 +146,7 @@ class WeightPage extends ConsumerWidget {
         return AlertDialog(
           title: const Text('Add weight entry'),
           content: StatefulBuilder(
+<<<<<<< ours
 <<<<<<< ours
             builder: (context, setState) {
               return Column(
@@ -178,6 +199,8 @@ class WeightPage extends ConsumerWidget {
                   Navigator.of(context).pop();
                 }
 =======
+=======
+>>>>>>> theirs
             builder: (context, setState) => Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -212,6 +235,9 @@ class WeightPage extends ConsumerWidget {
               onPressed: () {
                 ref.read(weightControllerProvider.notifier).addEntry(double.parse(controller.text), selected);
                 Navigator.of(context).pop();
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
               },
               child: const Text('Save'),
@@ -221,7 +247,10 @@ class WeightPage extends ConsumerWidget {
       },
     );
 <<<<<<< ours
+<<<<<<< ours
 
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
     controller.dispose();

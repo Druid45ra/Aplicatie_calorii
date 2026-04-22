@@ -3,6 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/utils/date_utils.dart';
 <<<<<<< ours
+<<<<<<< ours
+=======
+import '../../../../core/widgets/app_scaffold.dart';
+>>>>>>> theirs
 =======
 import '../../../../core/widgets/app_scaffold.dart';
 >>>>>>> theirs
@@ -22,8 +26,13 @@ class TrackingPage extends ConsumerWidget {
     return NavigationShell(
       index: 1,
 <<<<<<< ours
+<<<<<<< ours
       child: Scaffold(
         appBar: AppBar(title: const Text('Meal Tracking')),
+=======
+      child: AppScaffold(
+        title: 'Meals',
+>>>>>>> theirs
 =======
       child: AppScaffold(
         title: 'Meals',
@@ -33,6 +42,7 @@ class TrackingPage extends ConsumerWidget {
           icon: const Icon(Icons.add),
           label: const Text('Meal'),
         ),
+<<<<<<< ours
 <<<<<<< ours
         body: Padding(
           padding: const EdgeInsets.all(16),
@@ -131,6 +141,8 @@ class TrackingPage extends ConsumerWidget {
             ],
           ),
 =======
+=======
+>>>>>>> theirs
         body: Column(
           children: [
             Row(
@@ -195,6 +207,9 @@ class TrackingPage extends ConsumerWidget {
               ),
             ),
           ],
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
         ),
       ),
@@ -208,11 +223,15 @@ class TrackingPage extends ConsumerWidget {
       builder: (_) => MealFormSheet(
         initial: initial,
 <<<<<<< ours
+<<<<<<< ours
         onSave: (entry) {
           ref
               .read(mealsControllerProvider.notifier)
               .addOrUpdate(id: initial?.id, entry: entry);
         },
+=======
+        onSave: (entry) => ref.read(mealsControllerProvider.notifier).addOrUpdate(id: initial?.id, entry: entry),
+>>>>>>> theirs
 =======
         onSave: (entry) => ref.read(mealsControllerProvider.notifier).addOrUpdate(id: initial?.id, entry: entry),
 >>>>>>> theirs

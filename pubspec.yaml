@@ -1,4 +1,5 @@
 <<<<<<< ours
+<<<<<<< ours
 name: aplicatie_calorii
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
@@ -102,6 +103,8 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
 =======
+=======
+>>>>>>> theirs
 name: aplicatie_calorii
 description: Offline-first calorie tracking app built with Flutter Clean Architecture.
 publish_to: 'none'
@@ -135,4 +138,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs

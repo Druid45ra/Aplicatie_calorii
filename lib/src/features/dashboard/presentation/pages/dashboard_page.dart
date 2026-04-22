@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 <<<<<<< ours
+<<<<<<< ours
 import '../../../../core/utils/date_utils.dart';
 import '../../../../core/widgets/metric_card.dart';
+=======
+import '../../../../core/widgets/app_scaffold.dart';
+import '../../../../core/widgets/metric_card.dart';
+import '../../../tracking/presentation/controllers/meals_controller.dart';
+>>>>>>> theirs
 =======
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../../core/widgets/metric_card.dart';
@@ -17,6 +23,7 @@ class DashboardPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+<<<<<<< ours
 <<<<<<< ours
     final selectedDate = ref.watch(dashboardSelectedDateProvider);
     final summary = ref.watch(dashboardControllerProvider(selectedDate));
@@ -122,6 +129,8 @@ class DashboardPage extends ConsumerWidget {
             loading: () => const Center(child: CircularProgressIndicator()),
           ),
 =======
+=======
+>>>>>>> theirs
     final date = ref.watch(selectedDateProvider);
     final summary = ref.watch(dashboardControllerProvider(date));
 
@@ -167,6 +176,9 @@ class DashboardPage extends ConsumerWidget {
           ),
           error: (error, stackTrace) => Center(child: Text(error.toString())),
           loading: () => const Center(child: CircularProgressIndicator()),
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
         ),
       ),

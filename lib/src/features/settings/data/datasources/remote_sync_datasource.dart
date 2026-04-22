@@ -1,5 +1,8 @@
 <<<<<<< ours
+<<<<<<< ours
 
+=======
+>>>>>>> theirs
 =======
 >>>>>>> theirs
 import '../models/sync_payload_model.dart';

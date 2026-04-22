@@ -8,6 +8,7 @@ class WeightEntryModel extends WeightEntry {
   });
 
 <<<<<<< ours
+<<<<<<< ours
   Map<String, dynamic> toMap() {
     return {'id': id, 'weightKg': weightKg, 'date': date.toIso8601String()};
   }
@@ -28,6 +29,8 @@ class WeightEntryModel extends WeightEntry {
     );
   }
 =======
+=======
+>>>>>>> theirs
   Map<String, dynamic> toMap() => {
         'id': id,
         'weightKg': weightKg,
@@ -45,5 +48,8 @@ class WeightEntryModel extends WeightEntry {
         weightKg: entity.weightKg,
         date: entity.date,
       );
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 }

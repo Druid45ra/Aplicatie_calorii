@@ -3,6 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 <<<<<<< ours
+<<<<<<< ours
+=======
+import '../../../../core/widgets/app_scaffold.dart';
+import '../../../analytics/presentation/controllers/analytics_controller.dart';
+import '../../../dashboard/presentation/controllers/dashboard_controller.dart';
+>>>>>>> theirs
 =======
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../analytics/presentation/controllers/analytics_controller.dart';
@@ -13,15 +19,21 @@ import '../../../profile/presentation/controllers/profile_controller.dart';
 import '../../../tracking/presentation/controllers/meals_controller.dart';
 import '../../../weight/presentation/controllers/weight_controller.dart';
 <<<<<<< ours
+<<<<<<< ours
 import '../controllers/settings_controller.dart';
 import '../../../analytics/presentation/controllers/analytics_controller.dart';
 import '../../../dashboard/presentation/controllers/dashboard_controller.dart';
 import '../controllers/backup_controller.dart';
 =======
+=======
+>>>>>>> theirs
 import '../controllers/backup_controller.dart';
 import '../controllers/remote_sync_controller.dart';
 import '../controllers/settings_controller.dart';
 import '../controllers/sync_controller.dart';
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 
 class SettingsPage extends ConsumerWidget {
@@ -30,6 +42,7 @@ class SettingsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profile = ref.watch(profileControllerProvider);
+<<<<<<< ours
 <<<<<<< ours
 
     return NavigationShell(
@@ -133,6 +146,8 @@ class SettingsPage extends ConsumerWidget {
             loading: () => const Center(child: CircularProgressIndicator()),
           ),
 =======
+=======
+>>>>>>> theirs
     final syncStatus = ref.watch(syncStatusProvider);
     final remoteSyncState = ref.watch(remoteSyncControllerProvider);
 
@@ -343,6 +358,9 @@ class SettingsPage extends ConsumerWidget {
           ),
           error: (error, stackTrace) => Center(child: Text(error.toString())),
           loading: () => const Center(child: CircularProgressIndicator()),
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
         ),
       ),
@@ -350,6 +368,7 @@ class SettingsPage extends ConsumerWidget {
   }
 
   Future<void> _confirmReset(BuildContext context, WidgetRef ref) async {
+<<<<<<< ours
 <<<<<<< ours
     final confirmed =
         await showDialog<bool>(
@@ -373,6 +392,8 @@ class SettingsPage extends ConsumerWidget {
             );
           },
 =======
+=======
+>>>>>>> theirs
     final confirmed = await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
@@ -389,6 +410,9 @@ class SettingsPage extends ConsumerWidget {
               ),
             ],
           ),
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
         ) ??
         false;
@@ -399,16 +423,22 @@ class SettingsPage extends ConsumerWidget {
 
     await ref.read(settingsControllerProvider).resetAll();
 <<<<<<< ours
+<<<<<<< ours
 
     ref.invalidate(profileControllerProvider);
     ref.invalidate(mealsControllerProvider);
     ref.invalidate(weightControllerProvider);
 =======
+=======
+>>>>>>> theirs
     ref.invalidate(profileControllerProvider);
     ref.invalidate(mealsControllerProvider);
     ref.invalidate(weightControllerProvider);
     ref.invalidate(analyticsControllerProvider);
     ref.invalidate(dashboardControllerProvider(DateTime.now()));
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 
     if (context.mounted) {

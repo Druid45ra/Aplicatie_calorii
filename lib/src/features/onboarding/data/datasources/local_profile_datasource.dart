@@ -11,6 +11,7 @@ class LocalProfileDataSource {
   Future<UserProfileModel?> getProfile() async {
     final raw = box.get(_profileKey);
 <<<<<<< ours
+<<<<<<< ours
 
     if (raw is Map) {
       return UserProfileModel.fromMap(raw);
@@ -27,6 +28,8 @@ class LocalProfileDataSource {
     await box.delete(_profileKey);
   }
 =======
+=======
+>>>>>>> theirs
     if (raw is Map) {
       return UserProfileModel.fromMap(raw);
     }
@@ -36,5 +39,8 @@ class LocalProfileDataSource {
   Future<void> saveProfile(UserProfileModel profile) => box.put(_profileKey, profile.toMap());
 
   Future<void> clearProfile() => box.delete(_profileKey);
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 }

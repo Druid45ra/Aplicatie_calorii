@@ -15,12 +15,16 @@ class AnalyticsSnapshot extends Equatable {
 
   @override
 <<<<<<< ours
+<<<<<<< ours
   List<Object?> get props => [
     averageCalories,
     averageWeight,
     weightChange,
     adherenceRate,
   ];
+=======
+  List<Object?> get props => [averageCalories, averageWeight, weightChange, adherenceRate];
+>>>>>>> theirs
 =======
   List<Object?> get props => [averageCalories, averageWeight, weightChange, adherenceRate];
 >>>>>>> theirs

@@ -19,9 +19,13 @@ class UserProfileModel extends UserProfile {
       weightKg: (map['weightKg'] as num?)?.toDouble() ?? 0,
       goal: GoalType.values.byName((map['goal'] as String?) ?? 'maintain'),
 <<<<<<< ours
+<<<<<<< ours
       activityLevel: ActivityLevel.values.byName(
         (map['activityLevel'] as String?) ?? 'moderate',
       ),
+=======
+      activityLevel: ActivityLevel.values.byName((map['activityLevel'] as String?) ?? 'moderate'),
+>>>>>>> theirs
 =======
       activityLevel: ActivityLevel.values.byName((map['activityLevel'] as String?) ?? 'moderate'),
 >>>>>>> theirs
@@ -29,6 +33,7 @@ class UserProfileModel extends UserProfile {
     );
   }
 
+<<<<<<< ours
 <<<<<<< ours
   Map<String, dynamic> toMap() {
     return {
@@ -54,6 +59,8 @@ class UserProfileModel extends UserProfile {
     );
   }
 =======
+=======
+>>>>>>> theirs
   Map<String, dynamic> toMap() => {
         'sex': sex.name,
         'age': age,
@@ -73,5 +80,8 @@ class UserProfileModel extends UserProfile {
         activityLevel: entity.activityLevel,
         dailyCalorieTarget: entity.dailyCalorieTarget,
       );
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 }

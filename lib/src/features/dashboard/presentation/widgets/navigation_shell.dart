@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 class NavigationShell extends StatelessWidget {
 <<<<<<< ours
+<<<<<<< ours
   const NavigationShell({
     required this.child,
     required this.index,
@@ -11,10 +12,14 @@ class NavigationShell extends StatelessWidget {
 =======
   const NavigationShell({required this.child, required this.index, super.key});
 >>>>>>> theirs
+=======
+  const NavigationShell({required this.child, required this.index, super.key});
+>>>>>>> theirs
 
   final Widget child;
   final int index;
 
+<<<<<<< ours
 <<<<<<< ours
   static const _tabs = [
     '/dashboard',
@@ -26,6 +31,9 @@ class NavigationShell extends StatelessWidget {
 =======
   static const _tabs = ['/dashboard', '/tracking', '/weight', '/analytics', '/settings'];
 >>>>>>> theirs
+=======
+  static const _tabs = ['/dashboard', '/tracking', '/weight', '/analytics', '/settings'];
+>>>>>>> theirs
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +41,7 @@ class NavigationShell extends StatelessWidget {
       body: child,
       bottomNavigationBar: NavigationBar(
         selectedIndex: index,
+<<<<<<< ours
 <<<<<<< ours
         onDestinationSelected: (value) {
           context.go(_tabs[value]);
@@ -64,6 +73,8 @@ class NavigationShell extends StatelessWidget {
             label: 'Settings',
           ),
 =======
+=======
+>>>>>>> theirs
         onDestinationSelected: (value) => context.go(_tabs[value]),
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: 'Home'),
@@ -71,6 +82,9 @@ class NavigationShell extends StatelessWidget {
           NavigationDestination(icon: Icon(Icons.monitor_weight_outlined), selectedIcon: Icon(Icons.monitor_weight), label: 'Weight'),
           NavigationDestination(icon: Icon(Icons.insights_outlined), selectedIcon: Icon(Icons.insights), label: 'Analytics'),
           NavigationDestination(icon: Icon(Icons.settings_outlined), selectedIcon: Icon(Icons.settings), label: 'Settings'),
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
         ],
       ),

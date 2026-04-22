@@ -18,6 +18,7 @@ class SyncResult extends Equatable {
   @override
   List<Object?> get props => [
 <<<<<<< ours
+<<<<<<< ours
     success,
     message,
     receivedMeals,
@@ -25,11 +26,16 @@ class SyncResult extends Equatable {
     syncedAt,
   ];
 =======
+=======
+>>>>>>> theirs
         success,
         message,
         receivedMeals,
         receivedWeights,
         syncedAt,
       ];
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 }

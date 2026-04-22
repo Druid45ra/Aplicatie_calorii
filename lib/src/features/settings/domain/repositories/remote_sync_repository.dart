@@ -1,4 +1,5 @@
 <<<<<<< ours
+<<<<<<< ours
 class SyncResult {
   const SyncResult({
     required this.success,
@@ -14,11 +15,16 @@ class SyncResult {
   final int receivedWeights;
   final DateTime? syncedAt;
 =======
+=======
+>>>>>>> theirs
 import '../entities/sync_result.dart';
 
 abstract class RemoteSyncRepository {
   Future<SyncResult> pushLocalData();
   Future<SyncResult> pullRemoteData();
   Future<SyncResult> syncNow();
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 }

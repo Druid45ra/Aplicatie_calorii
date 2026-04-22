@@ -10,6 +10,7 @@ class WeightRepositoryImpl implements WeightRepository {
 
   @override
 <<<<<<< ours
+<<<<<<< ours
   Future<List<WeightEntry>> getEntries() {
     return localDataSource.getEntries();
   }
@@ -26,6 +27,8 @@ class WeightRepositoryImpl implements WeightRepository {
     return localDataSource.clearEntries();
   }
 =======
+=======
+>>>>>>> theirs
   Future<List<WeightEntry>> getEntries() => localDataSource.getEntries();
 
   @override
@@ -35,5 +38,8 @@ class WeightRepositoryImpl implements WeightRepository {
 
   @override
   Future<void> clearEntries() => localDataSource.clearEntries();
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
 }
