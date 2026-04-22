@@ -11,8 +11,6 @@ class AppRouter {
   static final router = GoRouter(
     initialLocation: '/onboarding',
     routes: [
-<<<<<<< ours
-<<<<<<< ours
       GoRoute(
         path: '/onboarding',
         builder: (context, state) => const OnboardingPage(),
@@ -34,19 +32,6 @@ class AppRouter {
         path: '/settings',
         builder: (context, state) => const SettingsPage(),
       ),
-=======
-=======
->>>>>>> theirs
-      GoRoute(path: '/onboarding', builder: (context, state) => const OnboardingPage()),
-      GoRoute(path: '/dashboard', builder: (context, state) => const DashboardPage()),
-      GoRoute(path: '/tracking', builder: (context, state) => const TrackingPage()),
-      GoRoute(path: '/weight', builder: (context, state) => const WeightPage()),
-      GoRoute(path: '/analytics', builder: (context, state) => const AnalyticsPage()),
-      GoRoute(path: '/settings', builder: (context, state) => const SettingsPage()),
-<<<<<<< ours
->>>>>>> theirs
-=======
->>>>>>> theirs
     ],
   );
 }
