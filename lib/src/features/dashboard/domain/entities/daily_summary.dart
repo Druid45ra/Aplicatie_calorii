@@ -20,6 +20,7 @@ class DailySummary extends Equatable {
   final int goalCalories;
 
   @override
+<<<<<<< ours
   List<Object?> get props => [
         consumedCalories,
         remainingCalories,
@@ -29,4 +30,7 @@ class DailySummary extends Equatable {
         mealCount,
         goalCalories,
       ];
+=======
+  List<Object?> get props => [consumedCalories, remainingCalories, protein, carbs, fat, mealCount, goalCalories];
+>>>>>>> theirs
 }

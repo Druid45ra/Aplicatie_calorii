@@ -30,6 +30,7 @@ class BackupRepositoryImpl implements BackupRepository {
     final weights = await weightRepository.getEntries();
 
     final backup = AppBackup(
+<<<<<<< ours
       profile: profile == null
           ? null
           : UserProfileModel.fromEntity(profile).toMap(),
@@ -44,12 +45,27 @@ class BackupRepositoryImpl implements BackupRepository {
     final jsonString = const JsonEncoder.withIndent(
       '  ',
     ).convert(backup.toMap());
+=======
+      profile: profile == null ? null : UserProfileModel.fromEntity(profile).toMap(),
+      meals: meals.map((item) => MealEntryModel.fromEntity(item).toMap()).toList(),
+      weights: weights.map((item) => WeightEntryModel.fromEntity(item).toMap()).toList(),
+    );
+
+    final jsonString = const JsonEncoder.withIndent('  ').convert(backup.toMap());
+>>>>>>> theirs
 
     await SharePlus.instance.share(
       ShareParams(
         text: 'Calorie Compass backup export',
         files: [
+<<<<<<< ours
           XFile.fromData(utf8.encode(jsonString), mimeType: 'application/json'),
+=======
+          XFile.fromData(
+            utf8.encode(jsonString),
+            mimeType: 'application/json',
+          ),
+>>>>>>> theirs
         ],
         fileNameOverrides: const ['calorie_compass_backup.json'],
       ),
@@ -63,7 +79,10 @@ class BackupRepositoryImpl implements BackupRepository {
       allowedExtensions: ['json'],
       withData: true,
     );
+<<<<<<< ours
 
+=======
+>>>>>>> theirs
     if (result == null || result.files.isEmpty) {
       return;
     }
@@ -73,6 +92,7 @@ class BackupRepositoryImpl implements BackupRepository {
       return;
     }
 
+<<<<<<< ours
     final jsonString = utf8.decode(bytes);
     final decoded = jsonDecode(jsonString) as Map<String, dynamic>;
     final backup = AppBackup.fromMap(decoded);
@@ -89,5 +109,18 @@ class BackupRepositoryImpl implements BackupRepository {
 
     final weights = backup.weights.map(WeightEntryModel.fromMap).toList();
     await weightRepository.saveEntries(weights);
+=======
+    final decoded = jsonDecode(utf8.decode(bytes)) as Map<String, dynamic>;
+    final backup = AppBackup.fromMap(decoded);
+
+    if (backup.profile == null) {
+      await profileRepository.clearProfile();
+    } else {
+      await profileRepository.saveProfile(UserProfileModel.fromMap(backup.profile!));
+    }
+
+    await mealRepository.saveMeals(backup.meals.map(MealEntryModel.fromMap).toList());
+    await weightRepository.saveEntries(backup.weights.map(WeightEntryModel.fromMap).toList());
+>>>>>>> theirs
   }
 }

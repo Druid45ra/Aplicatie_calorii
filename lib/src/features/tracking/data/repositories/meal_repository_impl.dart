@@ -9,6 +9,7 @@ class MealRepositoryImpl implements MealRepository {
   final LocalMealDataSource localDataSource;
 
   @override
+<<<<<<< ours
   Future<List<MealEntry>> getMeals() {
     return localDataSource.getMeals();
   }
@@ -24,4 +25,15 @@ class MealRepositoryImpl implements MealRepository {
   Future<void> clearMeals() {
     return localDataSource.clearMeals();
   }
+=======
+  Future<List<MealEntry>> getMeals() => localDataSource.getMeals();
+
+  @override
+  Future<void> saveMeals(List<MealEntry> meals) {
+    return localDataSource.saveMeals(meals.map(MealEntryModel.fromEntity).toList());
+  }
+
+  @override
+  Future<void> clearMeals() => localDataSource.clearMeals();
+>>>>>>> theirs
 }

@@ -6,7 +6,11 @@ class GetMeals {
 
   final MealRepository repository;
 
+<<<<<<< ours
   Future<List<MealEntry>> call() {
     return repository.getMeals();
   }
+=======
+  Future<List<MealEntry>> call() => repository.getMeals();
+>>>>>>> theirs
 }

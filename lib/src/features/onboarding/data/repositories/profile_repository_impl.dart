@@ -9,9 +9,13 @@ class ProfileRepositoryImpl implements ProfileRepository {
   final LocalProfileDataSource localDataSource;
 
   @override
+<<<<<<< ours
   Future<UserProfile?> getProfile() {
     return localDataSource.getProfile();
   }
+=======
+  Future<UserProfile?> getProfile() => localDataSource.getProfile();
+>>>>>>> theirs
 
   @override
   Future<void> saveProfile(UserProfile profile) {
@@ -19,7 +23,11 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
+<<<<<<< ours
   Future<void> clearProfile() {
     return localDataSource.clearProfile();
   }
+=======
+  Future<void> clearProfile() => localDataSource.clearProfile();
+>>>>>>> theirs
 }

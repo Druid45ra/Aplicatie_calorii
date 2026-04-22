@@ -20,6 +20,7 @@ class SyncPayloadModel {
 
   factory SyncPayloadModel.fromDomain(SyncPayload payload) {
     return SyncPayloadModel(
+<<<<<<< ours
       profile: payload.profile == null
           ? null
           : RemoteUserProfileDto.fromEntity(payload.profile!),
@@ -29,6 +30,11 @@ class SyncPayloadModel {
       weights: payload.weights
           .map((item) => RemoteWeightEntryDto.fromEntity(item))
           .toList(),
+=======
+      profile: payload.profile == null ? null : RemoteUserProfileDto.fromEntity(payload.profile!),
+      meals: payload.meals.map(RemoteMealEntryDto.fromEntity).toList(),
+      weights: payload.weights.map(RemoteWeightEntryDto.fromEntity).toList(),
+>>>>>>> theirs
       generatedAt: payload.generatedAt.toIso8601String(),
       schemaVersion: payload.schemaVersion,
     );
@@ -58,6 +64,7 @@ class SyncPayloadModel {
     return SyncPayloadModel(
       profile: map['profile'] == null
           ? null
+<<<<<<< ours
           : RemoteUserProfileDto.fromMap(
               Map<String, dynamic>.from(map['profile'] as Map),
             ),
@@ -74,6 +81,14 @@ class SyncPayloadModel {
               Map<String, dynamic>.from(item as Map),
             ),
           )
+=======
+          : RemoteUserProfileDto.fromMap(Map<String, dynamic>.from(map['profile'] as Map)),
+      meals: ((map['meals'] as List?) ?? const [])
+          .map((item) => RemoteMealEntryDto.fromMap(Map<String, dynamic>.from(item as Map)))
+          .toList(),
+      weights: ((map['weights'] as List?) ?? const [])
+          .map((item) => RemoteWeightEntryDto.fromMap(Map<String, dynamic>.from(item as Map)))
+>>>>>>> theirs
           .toList(),
       generatedAt: map['generatedAt'] as String? ?? '',
       schemaVersion: (map['schemaVersion'] as num?)?.toInt() ?? 1,

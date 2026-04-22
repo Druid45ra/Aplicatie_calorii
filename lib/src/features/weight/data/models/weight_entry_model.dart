@@ -7,6 +7,7 @@ class WeightEntryModel extends WeightEntry {
     required super.date,
   });
 
+<<<<<<< ours
   Map<String, dynamic> toMap() {
     return {'id': id, 'weightKg': weightKg, 'date': date.toIso8601String()};
   }
@@ -26,4 +27,23 @@ class WeightEntryModel extends WeightEntry {
       date: entity.date,
     );
   }
+=======
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'weightKg': weightKg,
+        'date': date.toIso8601String(),
+      };
+
+  factory WeightEntryModel.fromMap(Map<dynamic, dynamic> map) => WeightEntryModel(
+        id: map['id'] as String? ?? '',
+        weightKg: (map['weightKg'] as num?)?.toDouble() ?? 0,
+        date: DateTime.tryParse(map['date'] as String? ?? '') ?? DateTime.now(),
+      );
+
+  factory WeightEntryModel.fromEntity(WeightEntry entity) => WeightEntryModel(
+        id: entity.id,
+        weightKg: entity.weightKg,
+        date: entity.date,
+      );
+>>>>>>> theirs
 }

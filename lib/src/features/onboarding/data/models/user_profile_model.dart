@@ -18,13 +18,18 @@ class UserProfileModel extends UserProfile {
       heightCm: (map['heightCm'] as num?)?.toDouble() ?? 0,
       weightKg: (map['weightKg'] as num?)?.toDouble() ?? 0,
       goal: GoalType.values.byName((map['goal'] as String?) ?? 'maintain'),
+<<<<<<< ours
       activityLevel: ActivityLevel.values.byName(
         (map['activityLevel'] as String?) ?? 'moderate',
       ),
+=======
+      activityLevel: ActivityLevel.values.byName((map['activityLevel'] as String?) ?? 'moderate'),
+>>>>>>> theirs
       dailyCalorieTarget: (map['dailyCalorieTarget'] as num?)?.toInt() ?? 2000,
     );
   }
 
+<<<<<<< ours
   Map<String, dynamic> toMap() {
     return {
       'sex': sex.name,
@@ -48,4 +53,25 @@ class UserProfileModel extends UserProfile {
       dailyCalorieTarget: entity.dailyCalorieTarget,
     );
   }
+=======
+  Map<String, dynamic> toMap() => {
+        'sex': sex.name,
+        'age': age,
+        'heightCm': heightCm,
+        'weightKg': weightKg,
+        'goal': goal.name,
+        'activityLevel': activityLevel.name,
+        'dailyCalorieTarget': dailyCalorieTarget,
+      };
+
+  factory UserProfileModel.fromEntity(UserProfile entity) => UserProfileModel(
+        sex: entity.sex,
+        age: entity.age,
+        heightCm: entity.heightCm,
+        weightKg: entity.weightKg,
+        goal: entity.goal,
+        activityLevel: entity.activityLevel,
+        dailyCalorieTarget: entity.dailyCalorieTarget,
+      );
+>>>>>>> theirs
 }

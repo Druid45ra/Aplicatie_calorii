@@ -5,7 +5,11 @@ class ExportBackup {
 
   final BackupRepository repository;
 
+<<<<<<< ours
   Future<void> call() {
     return repository.exportBackup();
   }
+=======
+  Future<void> call() => repository.exportBackup();
+>>>>>>> theirs
 }

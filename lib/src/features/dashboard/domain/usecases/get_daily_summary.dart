@@ -6,7 +6,11 @@ class GetDailySummary {
 
   final DashboardRepository repository;
 
+<<<<<<< ours
   Future<DailySummary> call(DateTime date) {
     return repository.getDailySummary(date);
   }
+=======
+  Future<DailySummary> call(DateTime date) => repository.getDailySummary(date);
+>>>>>>> theirs
 }

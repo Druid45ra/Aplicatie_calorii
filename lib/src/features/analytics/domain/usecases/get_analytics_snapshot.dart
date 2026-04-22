@@ -6,7 +6,11 @@ class GetAnalyticsSnapshot {
 
   final AnalyticsRepository repository;
 
+<<<<<<< ours
   Future<AnalyticsSnapshot> call() {
     return repository.getSnapshot();
   }
+=======
+  Future<AnalyticsSnapshot> call() => repository.getSnapshot();
+>>>>>>> theirs
 }

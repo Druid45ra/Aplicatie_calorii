@@ -1,9 +1,13 @@
 import 'package:equatable/equatable.dart';
 
 enum BiologicalSex { female, male, other }
+<<<<<<< ours
 
 enum ActivityLevel { sedentary, light, moderate, active, athlete }
 
+=======
+enum ActivityLevel { sedentary, light, moderate, active, athlete }
+>>>>>>> theirs
 enum GoalType { loseWeight, maintain, gainWeight }
 
 class UserProfile extends Equatable {
@@ -48,6 +52,7 @@ class UserProfile extends Equatable {
   }
 
   @override
+<<<<<<< ours
   List<Object?> get props => [
         sex,
         age,
@@ -57,4 +62,7 @@ class UserProfile extends Equatable {
         activityLevel,
         dailyCalorieTarget,
       ];
+=======
+  List<Object?> get props => [sex, age, heightCm, weightKg, goal, activityLevel, dailyCalorieTarget];
+>>>>>>> theirs
 }

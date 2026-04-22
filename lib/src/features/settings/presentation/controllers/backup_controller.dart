@@ -5,7 +5,14 @@ import '../../domain/usecases/export_backup.dart';
 import '../../domain/usecases/import_backup.dart';
 
 final backupControllerProvider = Provider<BackupController>((ref) {
+<<<<<<< ours
   return BackupController(ExportBackup(sl()), ImportBackup(sl()));
+=======
+  return BackupController(
+    ExportBackup(sl()),
+    ImportBackup(sl()),
+  );
+>>>>>>> theirs
 });
 
 class BackupController {
@@ -14,6 +21,7 @@ class BackupController {
   final ExportBackup exportBackup;
   final ImportBackup importBackup;
 
+<<<<<<< ours
   Future<void> exportData() {
     return exportBackup();
   }
@@ -21,4 +29,9 @@ class BackupController {
   Future<void> importData() {
     return importBackup();
   }
+=======
+  Future<void> exportData() => exportBackup();
+
+  Future<void> importData() => importBackup();
+>>>>>>> theirs
 }
