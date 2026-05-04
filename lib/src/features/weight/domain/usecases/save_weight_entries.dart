@@ -6,15 +6,6 @@ class SaveWeightEntries {
 
   final WeightRepository repository;
 
-<<<<<<< ours
-<<<<<<< ours
-  Future<void> call(List<WeightEntry> entries) {
-    return repository.saveEntries(entries);
-  }
-=======
   Future<void> call(List<WeightEntry> entries) => repository.saveEntries(entries);
->>>>>>> theirs
-=======
-  Future<void> call(List<WeightEntry> entries) => repository.saveEntries(entries);
->>>>>>> theirs
+
 }

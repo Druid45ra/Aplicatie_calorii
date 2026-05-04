@@ -6,15 +6,6 @@ class SaveMeals {
 
   final MealRepository repository;
 
-<<<<<<< ours
-<<<<<<< ours
-  Future<void> call(List<MealEntry> meals) {
-    return repository.saveMeals(meals);
-  }
-=======
   Future<void> call(List<MealEntry> meals) => repository.saveMeals(meals);
->>>>>>> theirs
-=======
-  Future<void> call(List<MealEntry> meals) => repository.saveMeals(meals);
->>>>>>> theirs
+
 }

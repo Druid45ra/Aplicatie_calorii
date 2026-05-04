@@ -9,26 +9,6 @@ class WeightRepositoryImpl implements WeightRepository {
   final LocalWeightDataSource localDataSource;
 
   @override
-<<<<<<< ours
-<<<<<<< ours
-  Future<List<WeightEntry>> getEntries() {
-    return localDataSource.getEntries();
-  }
-
-  @override
-  Future<void> saveEntries(List<WeightEntry> entries) {
-    return localDataSource.saveEntries(
-      entries.map(WeightEntryModel.fromEntity).toList(),
-    );
-  }
-
-  @override
-  Future<void> clearEntries() {
-    return localDataSource.clearEntries();
-  }
-=======
-=======
->>>>>>> theirs
   Future<List<WeightEntry>> getEntries() => localDataSource.getEntries();
 
   @override
@@ -38,8 +18,4 @@ class WeightRepositoryImpl implements WeightRepository {
 
   @override
   Future<void> clearEntries() => localDataSource.clearEntries();
-<<<<<<< ours
->>>>>>> theirs
-=======
->>>>>>> theirs
 }

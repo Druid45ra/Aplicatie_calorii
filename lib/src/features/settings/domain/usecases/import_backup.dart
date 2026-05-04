@@ -5,15 +5,6 @@ class ImportBackup {
 
   final BackupRepository repository;
 
-<<<<<<< ours
-<<<<<<< ours
-  Future<void> call() {
-    return repository.importBackup();
-  }
-=======
   Future<void> call() => repository.importBackup();
->>>>>>> theirs
-=======
-  Future<void> call() => repository.importBackup();
->>>>>>> theirs
+
 }

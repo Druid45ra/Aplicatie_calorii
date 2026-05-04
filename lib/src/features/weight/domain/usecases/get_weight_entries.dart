@@ -6,15 +6,6 @@ class GetWeightEntries {
 
   final WeightRepository repository;
 
-<<<<<<< ours
-<<<<<<< ours
-  Future<List<WeightEntry>> call() {
-    return repository.getEntries();
-  }
-=======
   Future<List<WeightEntry>> call() => repository.getEntries();
->>>>>>> theirs
-=======
-  Future<List<WeightEntry>> call() => repository.getEntries();
->>>>>>> theirs
+
 }

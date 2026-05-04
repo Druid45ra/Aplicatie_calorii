@@ -10,23 +10,10 @@ class LocalWeightDataSource {
 
   Future<List<WeightEntryModel>> getEntries() async {
     final raw = box.get(_key, defaultValue: <dynamic>[]);
-<<<<<<< ours
-<<<<<<< ours
-
     if (raw is List) {
       return raw.whereType<Map>().map(WeightEntryModel.fromMap).toList();
     }
 
-=======
-    if (raw is List) {
-      return raw.whereType<Map>().map(WeightEntryModel.fromMap).toList();
-    }
->>>>>>> theirs
-=======
-    if (raw is List) {
-      return raw.whereType<Map>().map(WeightEntryModel.fromMap).toList();
-    }
->>>>>>> theirs
     return const [];
   }
 
@@ -34,15 +21,6 @@ class LocalWeightDataSource {
     await box.put(_key, entries.map((entry) => entry.toMap()).toList());
   }
 
-<<<<<<< ours
-<<<<<<< ours
-  Future<void> clearEntries() async {
-    await box.delete(_key);
-  }
-=======
   Future<void> clearEntries() => box.delete(_key);
->>>>>>> theirs
-=======
-  Future<void> clearEntries() => box.delete(_key);
->>>>>>> theirs
+
 }

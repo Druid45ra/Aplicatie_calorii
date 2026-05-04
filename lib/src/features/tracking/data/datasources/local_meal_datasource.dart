@@ -10,23 +10,10 @@ class LocalMealDataSource {
 
   Future<List<MealEntryModel>> getMeals() async {
     final raw = box.get(_key, defaultValue: <dynamic>[]);
-<<<<<<< ours
-<<<<<<< ours
-
     if (raw is List) {
       return raw.whereType<Map>().map(MealEntryModel.fromMap).toList();
     }
 
-=======
-    if (raw is List) {
-      return raw.whereType<Map>().map(MealEntryModel.fromMap).toList();
-    }
->>>>>>> theirs
-=======
-    if (raw is List) {
-      return raw.whereType<Map>().map(MealEntryModel.fromMap).toList();
-    }
->>>>>>> theirs
     return const [];
   }
 
@@ -34,15 +21,6 @@ class LocalMealDataSource {
     await box.put(_key, meals.map((meal) => meal.toMap()).toList());
   }
 
-<<<<<<< ours
-<<<<<<< ours
-  Future<void> clearMeals() async {
-    await box.delete(_key);
-  }
-=======
   Future<void> clearMeals() => box.delete(_key);
->>>>>>> theirs
-=======
-  Future<void> clearMeals() => box.delete(_key);
->>>>>>> theirs
+
 }

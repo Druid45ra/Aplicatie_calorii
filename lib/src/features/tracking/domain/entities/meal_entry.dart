@@ -48,23 +48,6 @@ class MealEntry extends Equatable {
   }
 
   @override
-<<<<<<< ours
-<<<<<<< ours
-  List<Object?> get props => [
-    id,
-    name,
-    calories,
-    protein,
-    carbs,
-    fat,
-    date,
-    mealType,
-    notes,
-  ];
-=======
   List<Object?> get props => [id, name, calories, protein, carbs, fat, date, mealType, notes];
->>>>>>> theirs
-=======
-  List<Object?> get props => [id, name, calories, protein, carbs, fat, date, mealType, notes];
->>>>>>> theirs
+
 }

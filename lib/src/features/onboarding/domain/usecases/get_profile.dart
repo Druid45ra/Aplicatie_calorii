@@ -6,15 +6,6 @@ class GetProfile {
 
   final ProfileRepository repository;
 
-<<<<<<< ours
-<<<<<<< ours
-  Future<UserProfile?> call() {
-    return repository.getProfile();
-  }
-=======
   Future<UserProfile?> call() => repository.getProfile();
->>>>>>> theirs
-=======
-  Future<UserProfile?> call() => repository.getProfile();
->>>>>>> theirs
+
 }

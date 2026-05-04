@@ -1,21 +1,8 @@
 import '../../../../core/utils/date_utils.dart';
-<<<<<<< ours
-<<<<<<< ours
 import '../../../onboarding/domain/repositories/profile_repository.dart';
 import '../../../tracking/domain/repositories/meal_repository.dart';
 import '../../domain/entities/daily_summary.dart';
 import '../../domain/repositories/dashboard_repository.dart';
-=======
-=======
->>>>>>> theirs
-import '../../onboarding/domain/repositories/profile_repository.dart';
-import '../../tracking/domain/repositories/meal_repository.dart';
-import '../domain/entities/daily_summary.dart';
-import '../domain/repositories/dashboard_repository.dart';
-<<<<<<< ours
->>>>>>> theirs
-=======
->>>>>>> theirs
 
 class DashboardRepositoryImpl implements DashboardRepository {
   DashboardRepositoryImpl(this.profileRepository, this.mealRepository);
@@ -27,39 +14,13 @@ class DashboardRepositoryImpl implements DashboardRepository {
   Future<DailySummary> getDailySummary(DateTime date) async {
     final profile = await profileRepository.getProfile();
     final meals = await mealRepository.getMeals();
-<<<<<<< ours
-<<<<<<< ours
-
-    final todayMeals = meals
-        .where((meal) => AppDateUtils.isSameDay(meal.date, date))
-        .toList();
-
-    final consumed = todayMeals.fold<int>(
-      0,
-      (sum, meal) => sum + meal.calories,
+    final todayMeals = meals.where(
+      (meal) => AppDateUtils.isSameDay(meal.date, date),
     );
-
-    final protein = todayMeals.fold<double>(
-      0,
-      (sum, meal) => sum + meal.protein,
-    );
-
-    final carbs = todayMeals.fold<double>(0, (sum, meal) => sum + meal.carbs);
-
-    final fat = todayMeals.fold<double>(0, (sum, meal) => sum + meal.fat);
-
-=======
-=======
->>>>>>> theirs
-    final todayMeals = meals.where((meal) => AppDateUtils.isSameDay(meal.date, date));
     final consumed = todayMeals.fold<int>(0, (sum, meal) => sum + meal.calories);
     final protein = todayMeals.fold<double>(0, (sum, meal) => sum + meal.protein);
     final carbs = todayMeals.fold<double>(0, (sum, meal) => sum + meal.carbs);
     final fat = todayMeals.fold<double>(0, (sum, meal) => sum + meal.fat);
-<<<<<<< ours
->>>>>>> theirs
-=======
->>>>>>> theirs
     final goal = profile?.dailyCalorieTarget ?? 2000;
 
     return DailySummary(

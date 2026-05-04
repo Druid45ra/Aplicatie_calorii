@@ -1,20 +1,7 @@
-<<<<<<< ours
-<<<<<<< ours
 import '../../../tracking/domain/repositories/meal_repository.dart';
 import '../../../weight/domain/repositories/weight_repository.dart';
 import '../../domain/entities/analytics_snapshot.dart';
 import '../../domain/repositories/analytics_repository.dart';
-=======
-=======
->>>>>>> theirs
-import '../../tracking/domain/repositories/meal_repository.dart';
-import '../../weight/domain/repositories/weight_repository.dart';
-import '../domain/entities/analytics_snapshot.dart';
-import '../domain/repositories/analytics_repository.dart';
-<<<<<<< ours
->>>>>>> theirs
-=======
->>>>>>> theirs
 
 class AnalyticsRepositoryImpl implements AnalyticsRepository {
   AnalyticsRepositoryImpl(this.mealRepository, this.weightRepository);
@@ -26,45 +13,20 @@ class AnalyticsRepositoryImpl implements AnalyticsRepository {
   Future<AnalyticsSnapshot> getSnapshot() async {
     final meals = await mealRepository.getMeals();
     final entries = await weightRepository.getEntries();
-<<<<<<< ours
-<<<<<<< ours
-
-    final double averageCalories = meals.isEmpty
-        ? 0
-        : meals.fold<int>(0, (sum, meal) => sum + meal.calories) / meals.length;
-
-    final double averageWeight = entries.isEmpty
-        ? 0
-        : entries.fold<double>(0, (sum, item) => sum + item.weightKg) /
-              entries.length;
-
-    final double weightChange = entries.length < 2
-        ? 0
-        : entries.last.weightKg - entries.first.weightKg;
-
-    const int goal = 2000;
-    final adherenceDays = meals.where((meal) => meal.calories <= goal).length;
-
-    final double adherenceRate = meals.isEmpty
-        ? 0
-        : adherenceDays / meals.length;
-=======
-=======
->>>>>>> theirs
     final averageCalories = meals.isEmpty
-        ? 0
-        : meals.fold<int>(0, (sum, meal) => sum + meal.calories) / meals.length;
+        ? 0.0
+        : meals.fold<int>(0, (sum, meal) => sum + meal.calories) /
+            meals.length;
     final averageWeight = entries.isEmpty
-        ? 0
-        : entries.fold<double>(0, (sum, item) => sum + item.weightKg) / entries.length;
-    final weightChange = entries.length < 2 ? 0 : entries.last.weightKg - entries.first.weightKg;
+        ? 0.0
+        : entries.fold<double>(0, (sum, item) => sum + item.weightKg) /
+            entries.length;
+    final weightChange = entries.length < 2
+        ? 0.0
+        : entries.last.weightKg - entries.first.weightKg;
     final goal = 2000;
     final adherenceDays = meals.where((meal) => meal.calories <= goal).length;
-    final adherenceRate = meals.isEmpty ? 0 : adherenceDays / meals.length;
-<<<<<<< ours
->>>>>>> theirs
-=======
->>>>>>> theirs
+    final adherenceRate = meals.isEmpty ? 0.0 : adherenceDays / meals.length;
 
     return AnalyticsSnapshot(
       averageCalories: averageCalories,

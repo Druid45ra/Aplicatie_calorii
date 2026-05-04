@@ -17,13 +17,7 @@ class MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-<<<<<<< ours
-<<<<<<< ours
 
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -32,34 +26,6 @@ class MetricCard extends StatelessWidget {
           children: [
             CircleAvatar(
               backgroundColor: theme.colorScheme.primaryContainer,
-<<<<<<< ours
-<<<<<<< ours
-              child: Icon(
-                icon,
-                color: theme.colorScheme.primary,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              value,
-              style: theme.textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: theme.textTheme.titleMedium,
-            ),
-            if (subtitle != null) ...[
-              const SizedBox(height: 6),
-              Text(
-                subtitle!,
-                style: theme.textTheme.bodySmall,
-              ),
-=======
-=======
->>>>>>> theirs
               child: Icon(icon, color: theme.colorScheme.primary),
             ),
             const SizedBox(height: 16),
@@ -69,10 +35,6 @@ class MetricCard extends StatelessWidget {
             if (subtitle != null) ...[
               const SizedBox(height: 6),
               Text(subtitle!, style: theme.textTheme.bodySmall),
-<<<<<<< ours
->>>>>>> theirs
-=======
->>>>>>> theirs
             ],
           ],
         ),
