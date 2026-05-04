@@ -6,8 +6,9 @@ import '../../domain/entities/weight_entry.dart';
 import '../../domain/usecases/get_weight_entries.dart';
 import '../../domain/usecases/save_weight_entries.dart';
 
-final weightControllerProvider = AsyncNotifierProvider<WeightController, List<WeightEntry>>(WeightController.new);
-
+final weightControllerProvider =
+    AsyncNotifierProvider<WeightController, List<WeightEntry>>(
+        WeightController.new);
 
 class WeightController extends AsyncNotifier<List<WeightEntry>> {
   late final GetWeightEntries _getEntries = GetWeightEntries(sl());
@@ -18,14 +19,16 @@ class WeightController extends AsyncNotifier<List<WeightEntry>> {
   Future<List<WeightEntry>> build() => _getEntries();
 
   Future<void> addEntry(double weight, DateTime date) async {
-    final current = [...state.valueOrNull ?? await _getEntries()]
-      ..add(WeightEntry(id: _uuid.v4(), weightKg: weight, date: date))
-      ..sort((a, b) => a.date.compareTo(b.date));
+    final current = [
+      ...state.valueOrNull ?? await _getEntries(),
+      WeightEntry(id: _uuid.v4(), weightKg: weight, date: date),
+    ]..sort((a, b) => a.date.compareTo(b.date));
     await _persist(current);
   }
 
   Future<void> removeEntry(String id) async {
-    final current = [...state.valueOrNull ?? await _getEntries()]..removeWhere((entry) => entry.id == id);
+    final current = [...state.valueOrNull ?? await _getEntries()]
+      ..removeWhere((entry) => entry.id == id);
 
     await _persist(current);
   }
@@ -35,7 +38,6 @@ class WeightController extends AsyncNotifier<List<WeightEntry>> {
     state = await AsyncValue.guard(() async {
       await _saveEntries(entries);
       return _getEntries();
-
     });
   }
 }

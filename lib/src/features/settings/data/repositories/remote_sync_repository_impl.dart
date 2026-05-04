@@ -23,7 +23,8 @@ class RemoteSyncRepositoryImpl implements RemoteSyncRepository {
   @override
   Future<SyncResult> pushLocalData() async {
     final payload = await _readLocalPayload();
-    final result = await remoteDataSource.push(SyncPayloadModel.fromDomain(payload));
+    final result =
+        await remoteDataSource.push(SyncPayloadModel.fromDomain(payload));
     return result.toDomain();
   }
 
@@ -31,6 +32,16 @@ class RemoteSyncRepositoryImpl implements RemoteSyncRepository {
   Future<SyncResult> pullRemoteData() async {
     final remotePayload = await remoteDataSource.pull();
     final domainPayload = remotePayload.toDomain();
+
+    if (_isEmptyPayload(domainPayload)) {
+      return SyncResult(
+        success: false,
+        message: 'No remote data available. Local data was left unchanged.',
+        receivedMeals: 0,
+        receivedWeights: 0,
+        syncedAt: DateTime.now(),
+      );
+    }
 
     if (domainPayload.profile == null) {
       await profileRepository.clearProfile();
@@ -52,17 +63,20 @@ class RemoteSyncRepositoryImpl implements RemoteSyncRepository {
   @override
   Future<SyncResult> syncNow() async {
     final payload = await _readLocalPayload();
-    final result = await remoteDataSource.sync(SyncPayloadModel.fromDomain(payload));
+    final result =
+        await remoteDataSource.sync(SyncPayloadModel.fromDomain(payload));
     final pulled = await remoteDataSource.pull();
     final domainPayload = pulled.toDomain();
 
-    if (domainPayload.profile == null) {
-      await profileRepository.clearProfile();
-    } else {
-      await profileRepository.saveProfile(domainPayload.profile!);
+    if (!_isEmptyPayload(domainPayload)) {
+      if (domainPayload.profile == null) {
+        await profileRepository.clearProfile();
+      } else {
+        await profileRepository.saveProfile(domainPayload.profile!);
+      }
+      await mealRepository.saveMeals(domainPayload.meals);
+      await weightRepository.saveEntries(domainPayload.weights);
     }
-    await mealRepository.saveMeals(domainPayload.meals);
-    await weightRepository.saveEntries(domainPayload.weights);
 
     return result.toDomain();
   }
@@ -79,5 +93,11 @@ class RemoteSyncRepositoryImpl implements RemoteSyncRepository {
       generatedAt: DateTime.now(),
       schemaVersion: 1,
     );
+  }
+
+  bool _isEmptyPayload(SyncPayload payload) {
+    return payload.profile == null &&
+        payload.meals.isEmpty &&
+        payload.weights.isEmpty;
   }
 }

@@ -47,17 +47,20 @@ Future<void> setupDependencies() async {
     ..registerLazySingleton(() => LocalProfileDataSource(settingsBox))
     ..registerLazySingleton(() => LocalMealDataSource(mealsBox))
     ..registerLazySingleton(() => LocalWeightDataSource(weightsBox))
-    ..registerLazySingleton<ProfileRepository>(() => ProfileRepositoryImpl(sl()))
+    ..registerLazySingleton<ProfileRepository>(
+        () => ProfileRepositoryImpl(sl()))
     ..registerLazySingleton<MealRepository>(() => MealRepositoryImpl(sl()))
     ..registerLazySingleton<WeightRepository>(() => WeightRepositoryImpl(sl()))
     ..registerLazySingleton<DashboardRepository>(
       () => DashboardRepositoryImpl(sl(), sl()),
     )
     ..registerLazySingleton<AnalyticsRepository>(
-      () => AnalyticsRepositoryImpl(sl(), sl()),
+      () => AnalyticsRepositoryImpl(sl(), sl(), sl()),
     )
-    ..registerLazySingleton<BackupRepository>(() => BackupRepositoryImpl(sl(), sl(), sl()))
-    ..registerLazySingleton<RemoteSyncDataSource>(() => MockRemoteSyncDataSource())
+    ..registerLazySingleton<BackupRepository>(
+        () => BackupRepositoryImpl(sl(), sl(), sl()))
+    ..registerLazySingleton<RemoteSyncDataSource>(
+        () => MockRemoteSyncDataSource())
     ..registerLazySingleton<RemoteSyncRepository>(
       () => RemoteSyncRepositoryImpl(sl(), sl(), sl(), sl()),
     )

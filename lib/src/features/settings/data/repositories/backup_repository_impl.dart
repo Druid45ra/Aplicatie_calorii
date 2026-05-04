@@ -30,12 +30,17 @@ class BackupRepositoryImpl implements BackupRepository {
     final weights = await weightRepository.getEntries();
 
     final backup = AppBackup(
-      profile: profile == null ? null : UserProfileModel.fromEntity(profile).toMap(),
-      meals: meals.map((item) => MealEntryModel.fromEntity(item).toMap()).toList(),
-      weights: weights.map((item) => WeightEntryModel.fromEntity(item).toMap()).toList(),
+      profile:
+          profile == null ? null : UserProfileModel.fromEntity(profile).toMap(),
+      meals:
+          meals.map((item) => MealEntryModel.fromEntity(item).toMap()).toList(),
+      weights: weights
+          .map((item) => WeightEntryModel.fromEntity(item).toMap())
+          .toList(),
     );
 
-    final jsonString = const JsonEncoder.withIndent('  ').convert(backup.toMap());
+    final jsonString =
+        const JsonEncoder.withIndent('  ').convert(backup.toMap());
 
     await SharePlus.instance.share(
       ShareParams(
@@ -68,16 +73,23 @@ class BackupRepositoryImpl implements BackupRepository {
       return;
     }
 
-    final decoded = jsonDecode(utf8.decode(bytes)) as Map<String, dynamic>;
-    final backup = AppBackup.fromMap(decoded);
+    final decoded = jsonDecode(utf8.decode(bytes));
+    if (decoded is! Map) {
+      throw const FormatException('Backup file must contain a JSON object.');
+    }
+
+    final backup = AppBackup.fromMap(Map<String, dynamic>.from(decoded));
 
     if (backup.profile == null) {
       await profileRepository.clearProfile();
     } else {
-      await profileRepository.saveProfile(UserProfileModel.fromMap(backup.profile!));
+      await profileRepository
+          .saveProfile(UserProfileModel.fromMap(backup.profile!));
     }
 
-    await mealRepository.saveMeals(backup.meals.map(MealEntryModel.fromMap).toList());
-    await weightRepository.saveEntries(backup.weights.map(WeightEntryModel.fromMap).toList());
+    await mealRepository
+        .saveMeals(backup.meals.map(MealEntryModel.fromMap).toList());
+    await weightRepository
+        .saveEntries(backup.weights.map(WeightEntryModel.fromMap).toList());
   }
 }

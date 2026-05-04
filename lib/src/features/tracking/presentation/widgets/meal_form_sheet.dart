@@ -29,9 +29,12 @@ class _MealFormSheetState extends State<MealFormSheet> {
     super.initState();
     final initial = widget.initial;
     _nameController = TextEditingController(text: initial?.name ?? '');
-    _caloriesController = TextEditingController(text: initial?.calories.toString() ?? '');
-    _proteinController = TextEditingController(text: initial?.protein.toString() ?? '');
-    _carbsController = TextEditingController(text: initial?.carbs.toString() ?? '');
+    _caloriesController =
+        TextEditingController(text: initial?.calories.toString() ?? '');
+    _proteinController =
+        TextEditingController(text: initial?.protein.toString() ?? '');
+    _carbsController =
+        TextEditingController(text: initial?.carbs.toString() ?? '');
     _fatController = TextEditingController(text: initial?.fat.toString() ?? '');
     _notesController = TextEditingController(text: initial?.notes ?? '');
     _mealType = initial?.mealType ?? 'Breakfast';
@@ -63,31 +66,65 @@ class _MealFormSheetState extends State<MealFormSheet> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(widget.initial == null ? 'Add meal' : 'Edit meal', style: Theme.of(context).textTheme.headlineSmall),
-
+              Text(widget.initial == null ? 'Add meal' : 'Edit meal',
+                  style: Theme.of(context).textTheme.headlineSmall),
               const SizedBox(height: 16),
               _field(_nameController, 'Meal name'),
               const SizedBox(height: 12),
               DropdownButtonFormField<String>(
-                value: _mealType,
+                initialValue: _mealType,
                 decoration: const InputDecoration(labelText: 'Meal type'),
                 items: const ['Breakfast', 'Lunch', 'Dinner', 'Snack']
-                    .map((value) => DropdownMenuItem(value: value, child: Text(value)))
+                    .map((value) =>
+                        DropdownMenuItem(value: value, child: Text(value)))
                     .toList(),
-                onChanged: (value) => setState(() => _mealType = value ?? 'Breakfast'),
+                onChanged: (value) =>
+                    setState(() => _mealType = value ?? 'Breakfast'),
               ),
               const SizedBox(height: 12),
-              _field(_caloriesController, 'Calories', keyboardType: TextInputType.number),
+              _field(
+                _caloriesController,
+                'Calories',
+                keyboardType: TextInputType.number,
+                min: 0,
+                max: 10000,
+                allowDecimal: false,
+              ),
               const SizedBox(height: 12),
               Row(children: [
-                Expanded(child: _field(_proteinController, 'Protein', keyboardType: TextInputType.number)),
+                Expanded(
+                  child: _field(
+                    _proteinController,
+                    'Protein',
+                    keyboardType: TextInputType.number,
+                    min: 0,
+                    max: 500,
+                  ),
+                ),
                 const SizedBox(width: 12),
-                Expanded(child: _field(_carbsController, 'Carbs', keyboardType: TextInputType.number)),
+                Expanded(
+                  child: _field(
+                    _carbsController,
+                    'Carbs',
+                    keyboardType: TextInputType.number,
+                    min: 0,
+                    max: 1000,
+                  ),
+                ),
                 const SizedBox(width: 12),
-                Expanded(child: _field(_fatController, 'Fat', keyboardType: TextInputType.number)),
+                Expanded(
+                  child: _field(
+                    _fatController,
+                    'Fat',
+                    keyboardType: TextInputType.number,
+                    min: 0,
+                    max: 500,
+                  ),
+                ),
               ]),
               const SizedBox(height: 12),
-              _field(_notesController, 'Notes', maxLines: 3, requiredField: false),
+              _field(_notesController, 'Notes',
+                  maxLines: 3, requiredField: false),
               const SizedBox(height: 16),
               FilledButton(onPressed: _save, child: const Text('Save meal')),
             ],
@@ -97,7 +134,16 @@ class _MealFormSheetState extends State<MealFormSheet> {
     );
   }
 
-  Widget _field(TextEditingController controller, String label, {TextInputType? keyboardType, int maxLines = 1, bool requiredField = true}) {
+  Widget _field(
+    TextEditingController controller,
+    String label, {
+    TextInputType? keyboardType,
+    int maxLines = 1,
+    bool requiredField = true,
+    num? min,
+    num? max,
+    bool allowDecimal = true,
+  }) {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(labelText: label),
@@ -107,8 +153,23 @@ class _MealFormSheetState extends State<MealFormSheet> {
         if (!requiredField) {
           return null;
         }
-        return (value == null || value.trim().isEmpty) ? 'Required' : null;
-
+        if (value == null || value.trim().isEmpty) {
+          return 'Required';
+        }
+        if (min == null || max == null) {
+          return null;
+        }
+        final parsed = _parseNumber(value);
+        if (parsed == null) {
+          return 'Enter a valid number';
+        }
+        if (!allowDecimal && parsed % 1 != 0) {
+          return 'Enter a whole number';
+        }
+        if (parsed < min || parsed > max) {
+          return 'Enter $min-$max';
+        }
+        return null;
       },
     );
   }
@@ -122,10 +183,10 @@ class _MealFormSheetState extends State<MealFormSheet> {
       MealEntry(
         id: widget.initial?.id ?? '',
         name: _nameController.text.trim(),
-        calories: int.parse(_caloriesController.text),
-        protein: double.parse(_proteinController.text),
-        carbs: double.parse(_carbsController.text),
-        fat: double.parse(_fatController.text),
+        calories: _parseNumber(_caloriesController.text)!.toInt(),
+        protein: _parseNumber(_proteinController.text)!,
+        carbs: _parseNumber(_carbsController.text)!,
+        fat: _parseNumber(_fatController.text)!,
         date: widget.initial?.date ?? DateTime.now(),
         mealType: _mealType,
         notes: _notesController.text.trim(),
@@ -133,5 +194,13 @@ class _MealFormSheetState extends State<MealFormSheet> {
     );
 
     Navigator.of(context).pop();
+  }
+
+  double? _parseNumber(String? value) {
+    final normalized = value?.trim().replaceAll(',', '.');
+    if (normalized == null || normalized.isEmpty) {
+      return null;
+    }
+    return double.tryParse(normalized);
   }
 }

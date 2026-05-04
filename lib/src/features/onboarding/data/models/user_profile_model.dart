@@ -13,13 +13,24 @@ class UserProfileModel extends UserProfile {
 
   factory UserProfileModel.fromMap(Map<dynamic, dynamic> map) {
     return UserProfileModel(
-      sex: BiologicalSex.values.byName((map['sex'] as String?) ?? 'other'),
+      sex: _enumByName(
+        BiologicalSex.values,
+        map['sex'] as String?,
+        BiologicalSex.other,
+      ),
       age: (map['age'] as num?)?.toInt() ?? 0,
       heightCm: (map['heightCm'] as num?)?.toDouble() ?? 0,
       weightKg: (map['weightKg'] as num?)?.toDouble() ?? 0,
-      goal: GoalType.values.byName((map['goal'] as String?) ?? 'maintain'),
-      activityLevel: ActivityLevel.values.byName((map['activityLevel'] as String?) ?? 'moderate'),
-
+      goal: _enumByName(
+        GoalType.values,
+        map['goal'] as String?,
+        GoalType.maintain,
+      ),
+      activityLevel: _enumByName(
+        ActivityLevel.values,
+        map['activityLevel'] as String?,
+        ActivityLevel.moderate,
+      ),
       dailyCalorieTarget: (map['dailyCalorieTarget'] as num?)?.toInt() ?? 2000,
     );
   }
@@ -43,4 +54,13 @@ class UserProfileModel extends UserProfile {
         activityLevel: entity.activityLevel,
         dailyCalorieTarget: entity.dailyCalorieTarget,
       );
+}
+
+T _enumByName<T extends Enum>(List<T> values, String? name, T fallback) {
+  for (final value in values) {
+    if (value.name == name) {
+      return value;
+    }
+  }
+  return fallback;
 }

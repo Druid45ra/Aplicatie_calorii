@@ -24,6 +24,11 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
   ActivityLevel _activity = ActivityLevel.moderate;
   GoalType _goal = GoalType.maintain;
 
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(_loadExistingProfile);
+  }
 
   @override
   void dispose() {
@@ -31,6 +36,22 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
     _heightController.dispose();
     _weightController.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadExistingProfile() async {
+    final profile = await ref.read(profileControllerProvider.future);
+    if (!mounted || profile == null) {
+      return;
+    }
+
+    setState(() {
+      _sex = profile.sex;
+      _activity = profile.activityLevel;
+      _goal = profile.goal;
+      _ageController.text = profile.age.toString();
+      _heightController.text = profile.heightCm.toString();
+      _weightController.text = profile.weightKg.toString();
+    });
   }
 
   @override
@@ -41,39 +62,55 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
         key: _formKey,
         child: ListView(
           children: [
-            Text('Build your nutrition baseline', style: Theme.of(context).textTheme.headlineSmall),
+            Text('Build your nutrition baseline',
+                style: Theme.of(context).textTheme.headlineSmall),
             const SizedBox(height: 20),
             DropdownButtonFormField<BiologicalSex>(
-              value: _sex,
+              key: ValueKey(_sex),
+              initialValue: _sex,
               decoration: const InputDecoration(labelText: 'Sex'),
               items: BiologicalSex.values
-                  .map((value) => DropdownMenuItem(value: value, child: Text(value.name)))
+                  .map((value) =>
+                      DropdownMenuItem(value: value, child: Text(value.name)))
                   .toList(),
-              onChanged: (value) => setState(() => _sex = value ?? BiologicalSex.other),
+              onChanged: (value) =>
+                  setState(() => _sex = value ?? BiologicalSex.other),
             ),
             const SizedBox(height: 16),
-            _numberField(_ageController, 'Age'),
+            _numberField(
+              _ageController,
+              'Age',
+              min: 13,
+              max: 120,
+              allowDecimal: false,
+            ),
             const SizedBox(height: 16),
-            _numberField(_heightController, 'Height (cm)'),
+            _numberField(_heightController, 'Height (cm)', min: 80, max: 250),
             const SizedBox(height: 16),
-            _numberField(_weightController, 'Weight (kg)'),
+            _numberField(_weightController, 'Weight (kg)', min: 25, max: 350),
             const SizedBox(height: 16),
             DropdownButtonFormField<ActivityLevel>(
-              value: _activity,
+              key: ValueKey(_activity),
+              initialValue: _activity,
               decoration: const InputDecoration(labelText: 'Activity level'),
               items: ActivityLevel.values
-                  .map((value) => DropdownMenuItem(value: value, child: Text(value.name)))
+                  .map((value) =>
+                      DropdownMenuItem(value: value, child: Text(value.name)))
                   .toList(),
-              onChanged: (value) => setState(() => _activity = value ?? ActivityLevel.moderate),
+              onChanged: (value) =>
+                  setState(() => _activity = value ?? ActivityLevel.moderate),
             ),
             const SizedBox(height: 16),
             DropdownButtonFormField<GoalType>(
-              value: _goal,
+              key: ValueKey(_goal),
+              initialValue: _goal,
               decoration: const InputDecoration(labelText: 'Goal'),
               items: GoalType.values
-                  .map((value) => DropdownMenuItem(value: value, child: Text(value.name)))
+                  .map((value) =>
+                      DropdownMenuItem(value: value, child: Text(value.name)))
                   .toList(),
-              onChanged: (value) => setState(() => _goal = value ?? GoalType.maintain),
+              onChanged: (value) =>
+                  setState(() => _goal = value ?? GoalType.maintain),
             ),
             const SizedBox(height: 24),
             FilledButton(
@@ -86,14 +123,30 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
     );
   }
 
-  Widget _numberField(TextEditingController controller, String label) {
-
+  Widget _numberField(
+    TextEditingController controller,
+    String label, {
+    required num min,
+    required num max,
+    bool allowDecimal = true,
+  }) {
     return TextFormField(
       controller: controller,
-      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      keyboardType: TextInputType.numberWithOptions(decimal: allowDecimal),
       decoration: InputDecoration(labelText: label),
-      validator: (value) => (value == null || value.isEmpty) ? 'Required' : null,
-
+      validator: (value) {
+        final parsed = _parseNumber(value);
+        if (parsed == null) {
+          return 'Enter a valid number';
+        }
+        if (!allowDecimal && parsed % 1 != 0) {
+          return 'Enter a whole number';
+        }
+        if (parsed < min || parsed > max) {
+          return 'Enter a value between $min and $max';
+        }
+        return null;
+      },
     );
   }
 
@@ -101,10 +154,11 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
     if (!_formKey.currentState!.validate()) {
       return;
     }
-    final age = int.parse(_ageController.text);
-    final height = double.parse(_heightController.text);
-    final weight = double.parse(_weightController.text);
-    final calories = _estimateCalories(age: age, heightCm: height, weightKg: weight);
+    final age = _parseNumber(_ageController.text)!.toInt();
+    final height = _parseNumber(_heightController.text)!;
+    final weight = _parseNumber(_weightController.text)!;
+    final calories =
+        _estimateCalories(age: age, heightCm: height, weightKg: weight);
     final profile = UserProfile(
       sex: _sex,
       age: age,
@@ -121,8 +175,8 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
     }
   }
 
-  int _estimateCalories({required int age, required double heightCm, required double weightKg}) {
-
+  int _estimateCalories(
+      {required int age, required double heightCm, required double weightKg}) {
     final base = switch (_sex) {
       BiologicalSex.male => 10 * weightKg + 6.25 * heightCm - 5 * age + 5,
       BiologicalSex.female => 10 * weightKg + 6.25 * heightCm - 5 * age - 161,
@@ -144,5 +198,13 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
     };
 
     return adjusted.round();
+  }
+
+  double? _parseNumber(String? value) {
+    final normalized = value?.trim().replaceAll(',', '.');
+    if (normalized == null || normalized.isEmpty) {
+      return null;
+    }
+    return double.tryParse(normalized);
   }
 }

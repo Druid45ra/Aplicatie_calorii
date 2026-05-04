@@ -33,12 +33,16 @@ class RemoteUserProfileDto {
 
   UserProfile toEntity() {
     return UserProfile(
-      sex: BiologicalSex.values.byName(sex),
+      sex: _enumByName(BiologicalSex.values, sex, BiologicalSex.other),
       age: age,
       heightCm: heightCm,
       weightKg: weightKg,
-      goal: GoalType.values.byName(goal),
-      activityLevel: ActivityLevel.values.byName(activityLevel),
+      goal: _enumByName(GoalType.values, goal, GoalType.maintain),
+      activityLevel: _enumByName(
+        ActivityLevel.values,
+        activityLevel,
+        ActivityLevel.moderate,
+      ),
       dailyCalorieTarget: dailyCalorieTarget,
     );
   }
@@ -66,4 +70,13 @@ class RemoteUserProfileDto {
       dailyCalorieTarget: (map['dailyCalorieTarget'] as num?)?.toInt() ?? 2000,
     );
   }
+}
+
+T _enumByName<T extends Enum>(List<T> values, String? name, T fallback) {
+  for (final value in values) {
+    if (value.name == name) {
+      return value;
+    }
+  }
+  return fallback;
 }
