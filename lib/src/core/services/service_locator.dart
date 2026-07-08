@@ -35,7 +35,7 @@ Future<void> setupDependencies() async {
   final mealsBox = await Hive.openBox<dynamic>(AppBoxes.meals);
   final weightsBox = await Hive.openBox<dynamic>(AppBoxes.weights);
 
-  
+  sl
     ..registerLazySingleton(
       () => const ApiConfig(
         baseUrl: 'https://api.example.com',

@@ -8,14 +8,11 @@ class CalorieBarChart extends StatelessWidget {
 
   final List<MealEntry> meals;
 
-  @override
-  Widget build(BuildContext context) {
-    if (meals.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
+  /// Memoized grouping of meals by date to prevent redundant computations
+  List<MapEntry<String, int>> _getMemoizedGroups() {
+    if (meals.isEmpty) return [];
+    
     final grouped = <String, int>{};
-
     for (final meal in meals) {
       final key = '${meal.date.day}/${meal.date.month}';
       grouped.update(
@@ -24,8 +21,16 @@ class CalorieBarChart extends StatelessWidget {
         ifAbsent: () => meal.calories,
       );
     }
+    return grouped.entries.toList();
+  }
 
-    final entries = grouped.entries.toList();
+  @override
+  Widget build(BuildContext context) {
+    if (meals.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    final entries = _getMemoizedGroups();
 
     return Card(
       child: Padding(

@@ -86,7 +86,22 @@ class TrackingPage extends ConsumerWidget {
                     },
                   );
                 },
-                error: (error, stackTrace) => Center(child: Text(error.toString())),
+                error: (error, stackTrace) => Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                      const SizedBox(height: 16),
+                      const Text('Failed to load meals'),
+                      const SizedBox(height: 8),
+                      Text(
+                        error.toString(),
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
+                ),
                 loading: () => const Center(child: CircularProgressIndicator()),
               ),
             ),
